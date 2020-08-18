@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <!-- <img alt="Vue logo" src="./assets/logo.png" /> -->
-    <HelloWorld>默认按钮</HelloWorld>
+    <HelloWorld tooltip>Button</HelloWorld>
     <HelloWorld type="primary">主要按钮</HelloWorld>
     <HelloWorld type="success">成功按钮</HelloWorld>
     <HelloWorld type="info">信息按钮</HelloWorld>

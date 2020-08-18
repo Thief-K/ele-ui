@@ -1,6 +1,8 @@
 .DS_Store
 node_modules
 /dist
+coverage
+tests/unit/__snapshots__
 
 
 # local env files

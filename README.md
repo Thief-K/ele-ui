@@ -1,29 +1,11 @@
-# ele-ui
+# Ele UI
 
-## Project setup
-```
-npm install
-```
+> Based on Element UI
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## Global function/variable
 
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Run your unit tests
-```
-npm run test:unit
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+- `this.$http`: http request
+  - `this.$http.get`: http get
+  - `this.$http.post`: http post
+- `this.$system`: system variable
+  - `this.$system.lang`: language

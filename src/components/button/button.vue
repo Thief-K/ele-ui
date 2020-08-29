@@ -1,6 +1,6 @@
 <template>
   <!-- button -->
-  <el-button v-if="!tooltip" v-bind="attrs" v-on="listeners">
+  <el-button v-if="!tooltip" v-bind="attrs" @click="onClick">
     <slot></slot>
   </el-button>
 
@@ -9,7 +9,7 @@
     <template #content>
       <span v-html="content"></span>
     </template>
-    <el-button v-bind="attrs" v-on="listeners"></el-button>
+    <el-button v-bind="attrs" @click="onClick"></el-button>
   </el-tooltip>
 </template>
 
@@ -18,8 +18,9 @@ import preset from './preset'
 
 export default {
   inheritAttrs: false,
+  name: 'EleButton',
   props: {
-    // the text will be shown in the tooltip
+    // whether the text will be shown in the tooltip
     tooltip: Boolean
   },
   computed: {
@@ -28,13 +29,12 @@ export default {
     },
     content() {
       return this.$slots.default?.[0].text
-    },
-    listeners() {
-      return {
-        // triggered when click button
-        // @arg native event
-        click: event => this.$emit('click', event)
-      }
+    }
+  },
+  methods: {
+    // triggered when click button
+    onClick(event) {
+      this.$emit('click', event)
     }
   }
 }

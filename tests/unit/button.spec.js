@@ -13,6 +13,7 @@ describe('Button', () => {
         default: 'Button'
       }
     })
+    expect(wrapper.vm.content).toBe('Button')
     expect(wrapper.text()).toBe('Button')
   })
 
@@ -31,7 +32,17 @@ describe('Button', () => {
 
   it('click', () => {
     const wrapper = shallowMount(Button)
-    wrapper.vm.$emit('click')
-    expect(wrapper.emitted().click).toBeTruthy()
+    wrapper.vm.onClick()
+    expect(wrapper.emitted('click')).toBeTruthy()
+  })
+
+  it('preset', () => {
+    const wrapper = shallowMount(Button, {
+      propsData: {
+        type: 'query'
+      }
+    })
+    expect(wrapper.attributes().type).toBe('primary')
+    expect(wrapper.attributes().icon).toBe('el-icon-search')
   })
 })

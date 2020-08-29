@@ -1,70 +1,61 @@
 <template>
   <div id="app">
-    <!-- <img alt="Vue logo" src="./assets/logo.png" /> -->
-    <HelloWorld tooltip>Button</HelloWorld>
-    <HelloWorld type="primary">主要按钮</HelloWorld>
-    <HelloWorld type="success">成功按钮</HelloWorld>
-    <HelloWorld type="info">信息按钮</HelloWorld>
-    <HelloWorld type="warning">警告按钮</HelloWorld>
-    <HelloWorld type="danger">危险按钮</HelloWorld>
-    <HelloWorld type="download">成功按钮</HelloWorld>
+    <Button @click="onClick">Button</Button>
     <br />
-    <HelloWorld plain>朴素按钮</HelloWorld>
-    <HelloWorld type="primary" plain>主要按钮</HelloWorld>
-    <HelloWorld type="success" plain>成功按钮</HelloWorld>
-    <HelloWorld type="info" plain>信息按钮</HelloWorld>
-    <HelloWorld type="warning" plain>警告按钮</HelloWorld>
-    <HelloWorld type="danger" plain>危险按钮</HelloWorld>
-    <br />
-    <HelloWorld round>圆角按钮</HelloWorld>
-    <HelloWorld type="primary" round>主要按钮</HelloWorld>
-    <HelloWorld type="success" round>成功按钮</HelloWorld>
-    <HelloWorld type="info" round>信息按钮</HelloWorld>
-    <HelloWorld type="warning" round>警告按钮</HelloWorld>
-    <HelloWorld type="danger" round>危险按钮</HelloWorld>
-    <br />
-    <HelloWorld icon="el-icon-search" circle tooltip></HelloWorld>
-    <HelloWorld type="primary" icon="el-icon-edit" circle tooltip :loading="loading" @click="aaa">123</HelloWorld>
-    <HelloWorld type="success" icon="el-icon-check" circle></HelloWorld>
-    <HelloWorld type="info" icon="el-icon-message" circle></HelloWorld>
-    <HelloWorld type="warning" icon="el-icon-star-off" circle></HelloWorld>
-    <HelloWorld type="danger" icon="el-icon-delete" circle></HelloWorld>
-    <br />
-    <HelloWorld disabled>默认按钮</HelloWorld>
-    <HelloWorld type="primary" disabled>主要按钮</HelloWorld>
-    <HelloWorld type="success" disabled>成功按钮</HelloWorld>
-    <HelloWorld type="info" disabled>信息按钮</HelloWorld>
-    <HelloWorld type="warning" disabled>警告按钮</HelloWorld>
-    <HelloWorld type="danger" disabled>危险按钮</HelloWorld>
-    <br />
-    <HelloWorld plain disabled>朴素按钮</HelloWorld>
-    <HelloWorld type="primary" plain disabled>主要按钮</HelloWorld>
-    <HelloWorld type="success" plain disabled>成功按钮</HelloWorld>
-    <HelloWorld type="info" plain disabled>信息按钮</HelloWorld>
-    <HelloWorld type="warning" plain disabled>警告按钮</HelloWorld>
-    <HelloWorld type="danger" plain disabled>危险按钮</HelloWorld>
+    <Select v-model="select" :groups="groups"></Select>{{ select }}
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/button/button.vue'
+import Button from './components/button/button.vue'
+import Select from './components/select/select.vue'
 
 export default {
   name: 'App',
   data() {
     return {
-      loading: false
+      select: '2',
+      options: [
+        { value: '1', label: 'A', disabled: true },
+        { value: '2', label: 'B' },
+        { value: '3', label: 'C' }
+      ],
+      groups: [
+        {
+          label: '动物',
+          options: [
+            { value: '1', label: '猫', disabled: true },
+            { value: '2', label: '老鼠' },
+            { value: '3', label: '狗' }
+          ]
+        },
+        {
+          label: '人类',
+          options: [
+            { value: '4', label: '男人', disabled: true },
+            { value: '5', label: '女人' },
+            { value: '6', label: '人妖' }
+          ]
+        }
+      ]
     }
   },
   components: {
-    HelloWorld
+    Button,
+    Select
   },
   methods: {
-    aaa() {
-      this.loading = true
-      setTimeout(() => {
-        this.loading = false
-      }, 1500)
+    onClick() {
+      this.groups = [
+        {
+          label: '动物',
+          options: [
+            { value: '1', label: '猫', disabled: true },
+            { value: '2', label: '老鼠' },
+            { value: '3', label: '狗' }
+          ]
+        }
+      ]
     }
   }
 }

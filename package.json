@@ -7,11 +7,14 @@
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
     "test:coverage": "vue-cli-service test:unit --coverage",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "lib": "vue-cli-service build --target lib --name ele-ui --dest lib ./src/components/index.js"
   },
+  "main": "lib/ele-ui.common.js",
   "dependencies": {
     "core-js": "^3.6.5",
     "element-ui": "^2.13.2",
+    "github-markdown-css": "^4.0.0",
     "lodash": "^4.17.20",
     "vue": "^2.6.11"
   },
@@ -31,6 +34,7 @@
     "prettier": "^1.19.1",
     "sass": "^1.26.5",
     "sass-loader": "^8.0.2",
+    "vue-markdown-loader": "^2.4.1",
     "vue-template-compiler": "^2.6.11",
     "webpack-bundle-analyzer": "^3.8.0"
   }

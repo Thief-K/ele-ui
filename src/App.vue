@@ -1,73 +1,99 @@
 <template>
   <div id="app">
-    <Button @click="onClick">Button</Button>
-    <br />
-    <Select v-model="select" :groups="groups"></Select>{{ select }}
+    <el-container class="container-wrap">
+      <el-header height="42px">
+        <!-- <img alt="logo" src="./assets/logo.png" style="cursor: pointer; height: 100%;" /> -->
+        <el-button type="primary" icon="el-icon-setting" circle></el-button>
+      </el-header>
+      <el-container class="container-main">
+        <el-aside>
+          <el-tree
+            ref="componentTree"
+            :data="treeData"
+            node-key="id"
+            default-expand-all
+            highlight-current
+            :expand-on-click-node="false"
+            @node-click="onNodeClick"
+          >
+          </el-tree>
+        </el-aside>
+        <el-main>
+          <component class="markdown-body" :is="component"></component>
+        </el-main>
+      </el-container>
+    </el-container>
   </div>
 </template>
 
 <script>
-import Button from './components/button/button.vue'
-import Select from './components/select/select.vue'
+import treeData from '../demo/index.js'
+import 'github-markdown-css'
 
 export default {
   name: 'App',
   data() {
     return {
-      select: '2',
-      options: [
-        { value: '1', label: 'A', disabled: true },
-        { value: '2', label: 'B' },
-        { value: '3', label: 'C' }
-      ],
-      groups: [
-        {
-          label: '动物',
-          options: [
-            { value: '1', label: '猫', disabled: true },
-            { value: '2', label: '老鼠' },
-            { value: '3', label: '狗' }
-          ]
-        },
-        {
-          label: '人类',
-          options: [
-            { value: '4', label: '男人', disabled: true },
-            { value: '5', label: '女人' },
-            { value: '6', label: '人妖' }
-          ]
-        }
-      ]
+      treeData: treeData['en'],
+      component: null
     }
-  },
-  components: {
-    Button,
-    Select
   },
   methods: {
-    onClick() {
-      this.groups = [
-        {
-          label: '动物',
-          options: [
-            { value: '1', label: '猫', disabled: true },
-            { value: '2', label: '老鼠' },
-            { value: '3', label: '狗' }
-          ]
+    // triggered when click node
+    onNodeClick(node) {
+      let component = null
+      if (node === null) {
+        component = () => import('../demo/index.vue')
+      } else {
+        if (node.disabled) {
+          return
         }
-      ]
+        component = () => import(`../demo/${node.id}/${node.id}.vue`)
+      }
+      this.component = component
     }
+  },
+  created() {
+    this.onNodeClick(null)
   }
 }
 </script>
 
 <style lang="scss">
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', Arial,
+    sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  width: 70%;
+  min-width: 1200px;
+  margin: 0 auto;
+}
+
+.container-wrap {
+  height: calc(100vh - 16px);
+}
+
+.container-main {
+  height: calc(100vh - 58px);
+}
+
+.el-header {
+  height: 42px;
+  text-align: right;
+  border-bottom: 3px solid #eee;
+}
+
+.el-aside {
+  padding: 10px;
+  border-right: 3px solid #eee;
+  .el-tree-node__label {
+    font-size: 16px;
+    font-weight: bold;
+  }
+}
+
+.el-main {
+  padding: 20px 50px;
 }
 </style>

@@ -16,6 +16,7 @@
 <script>
 import preset from './preset'
 
+// Select
 export default {
   inheritAttrs: false,
   name: 'EleButton',

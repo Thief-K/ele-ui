@@ -88,12 +88,21 @@ export default {
   padding: 10px;
   border-right: 3px solid #eee;
   .el-tree-node__label {
-    font-size: 16px;
     font-weight: bold;
   }
 }
 
 .el-main {
   padding: 20px 50px;
+}
+
+.markdown-body pre {
+  padding: 16px;
+  overflow: auto;
+  font-size: 85%;
+  line-height: 1.45;
+  background-color: #f6f8fa;
+  border-radius: 6px;
+  margin: 0px;
 }
 </style>

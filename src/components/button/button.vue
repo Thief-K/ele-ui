@@ -22,7 +22,10 @@ export default {
   name: 'EleButton',
   props: {
     // whether the text will be shown in the tooltip
-    tooltip: Boolean
+    tooltip: {
+      type: Boolean,
+      required: false
+    }
   },
   computed: {
     attrs() {

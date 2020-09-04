@@ -24,15 +24,30 @@ export default {
   },
   props: {
     // value of select
-    value: [String, Array],
+    value: {
+      type: [String, Array],
+      required: false
+    },
     // select options
-    options: [Array],
+    options: {
+      type: Array,
+      required: false
+    },
     // group options
-    groups: [Array],
+    groups: {
+      type: Array,
+      required: false
+    },
     // data dictionary code
-    dictCode: String,
+    dictCode: {
+      type: String,
+      required: false
+    },
     // custom request
-    request: Object
+    request: {
+      type: Object,
+      required: false
+    }
   },
   data() {
     return {

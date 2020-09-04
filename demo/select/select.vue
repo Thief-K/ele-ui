@@ -1,33 +1,33 @@
 <template>
   <div>
     <demo-template>
-      <template #title>基础用法</template>
+      <template #title>Basic usage</template>
       <template #content>
-        <Select v-model="value" :options="options" />
+        <EleSelect v-model="value" :options="options" />
+        <p>Use like the official demo</p>
       </template>
-    </demo-template>
-
-    <demo-template>
-      <template #title>基础用法</template>
-      <template #content>
-        <Select v-model="value" :options="options" />
+      <template #code>
+        <CodeBasic class="markdown-body" />
       </template>
     </demo-template>
   </div>
 </template>
 
 <script>
-import Select from '../../src/components/select/select.vue'
+import EleSelect from '../../src/components/select/select.vue'
+import CodeBasic from './code/code-basic.md'
 
 export default {
-  components: { Select },
+  components: { EleSelect, CodeBasic },
   data() {
     return {
       value: '',
       options: [
-        { value: '1', label: 'A' },
-        { value: '2', label: 'B' },
-        { value: '3', label: 'C' }
+        { value: 'Option1', label: 'Option1' },
+        { value: 'Option2', label: 'Option2' },
+        { value: 'Option3', label: 'Option3' },
+        { value: 'Option4', label: 'Option4' },
+        { value: 'Option5', label: 'Option5' }
       ]
     }
   }

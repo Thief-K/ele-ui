@@ -4,6 +4,7 @@ import App from './App.vue'
 import { Button, Select, Option, OptionGroup, Tag, Tooltip } from 'element-ui'
 import { Container, Header, Aside, Main, Tree, Card, Popover } from 'element-ui'
 import DemoTemplate from '../demo/demo.vue'
+import { get } from './utils/request'
 
 // element-ui config
 Vue.prototype.$ELEMENT = { size: 'small', zIndex: 3000 }
@@ -25,6 +26,9 @@ Vue.use(Tree)
 Vue.use(Card)
 Vue.use(Popover)
 Vue.component('DemoTemplate', DemoTemplate)
+
+// global method
+Vue.prototype.$http = { get }
 
 Vue.config.productionTip = false
 

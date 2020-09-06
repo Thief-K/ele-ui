@@ -1,13 +1,47 @@
 <template>
   <div>
     <demo-template>
-      <template #title>Basic usage</template>
+      <template #title>Options</template>
       <template #content>
-        <EleSelect v-model="value" :options="options" />
-        <p>Use like the official demo</p>
+        <EleSelect v-model="value1" :options="options" />
       </template>
       <template #code>
-        <CodeBasic class="markdown-body" />
+        <CodeOptions class="markdown-body" />
+      </template>
+    </demo-template>
+
+    <demo-template>
+      <template #title>Groups</template>
+      <template #content>
+        <EleSelect v-model="value2" :groups="groups" />
+      </template>
+      <template #code>
+        <CodeGroups class="markdown-body" />
+      </template>
+    </demo-template>
+
+    <demo-template>
+      <template #title>Data dictionary</template>
+      <template #content>
+        <EleSelect v-model="value3" dictCode="name" />
+        <p class="markdown-body">The default request url is <code>/common/getDictCode</code></p>
+      </template>
+      <template #code>
+        <CodeDataDict class="markdown-body" />
+      </template>
+    </demo-template>
+
+    <demo-template>
+      <template #title>Custom request</template>
+      <template #content>
+        <EleSelect v-model="value4" :request="request" />
+        <p class="markdown-body">
+          The response body should like
+          <code> { type: 'options | groups', data: [] } </code>
+        </p>
+      </template>
+      <template #code>
+        <CodeRequest class="markdown-body" />
       </template>
     </demo-template>
   </div>
@@ -15,20 +49,48 @@
 
 <script>
 import EleSelect from '../../src/components/select/select.vue'
-import CodeBasic from './code/code-basic.md'
+import CodeOptions from './code/code-options.md'
+import CodeGroups from './code/code-groups.md'
+import CodeDataDict from './code/code-data-dict.md'
+import CodeRequest from './code/code-request.md'
+import './mock'
 
 export default {
-  components: { EleSelect, CodeBasic },
+  components: { EleSelect, CodeOptions, CodeGroups, CodeDataDict, CodeRequest },
   data() {
     return {
-      value: '',
+      value1: '',
+      value2: '',
+      value3: '',
+      value4: '',
       options: [
-        { value: 'Option1', label: 'Option1' },
-        { value: 'Option2', label: 'Option2' },
-        { value: 'Option3', label: 'Option3' },
-        { value: 'Option4', label: 'Option4' },
-        { value: 'Option5', label: 'Option5' }
-      ]
+        { value: '1', label: 'Option1' },
+        { value: '2', label: 'Option2' },
+        { value: '3', label: 'Option3' },
+        { value: '4', label: 'Option4' },
+        { value: '5', label: 'Option5' }
+      ],
+      groups: [
+        {
+          label: 'Group1',
+          options: [
+            { value: '1', label: 'Option1' },
+            { value: '2', label: 'Option2' }
+          ]
+        },
+        {
+          label: 'Group2',
+          options: [
+            { value: '3', label: 'Option3' },
+            { value: '4', label: 'Option4' },
+            { value: '5', label: 'Option5' }
+          ]
+        }
+      ],
+      request: {
+        url: '/common/select',
+        param: {}
+      }
     }
   }
 }

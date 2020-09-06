@@ -4,7 +4,6 @@
       <template #title>Basic usage</template>
       <template #content>
         <EleButton>Button</EleButton>
-        <p>Use like the official demo</p>
       </template>
       <template #code>
         <CodeBasic class="markdown-body" />

@@ -42,5 +42,14 @@
     font-weight: bold;
     font-size: 13px;
   }
+  code {
+    font-style: normal;
+    color: #476582;
+    padding: 0.25rem 0.5rem;
+    margin: 0;
+    font-size: 0.85em;
+    background-color: rgba(27, 31, 35, 0.05);
+    border-radius: 3px;
+  }
 }
 </style>

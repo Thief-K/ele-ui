@@ -1,9 +1,9 @@
 <template>
   <div>
     <demo-template>
-      <template #title>Basic usage</template>
+      <template #title>{{ $t('common.basic') }}</template>
       <template #content>
-        <EleButton>Button</EleButton>
+        <EleButton>{{ $t('button.button') }}</EleButton>
       </template>
       <template #code>
         <CodeBasic class="markdown-body" />
@@ -11,9 +11,9 @@
     </demo-template>
 
     <demo-template>
-      <template #title>Tooltip</template>
+      <template #title>{{ $t('button.tooltip') }}</template>
       <template #content>
-        <EleButton tooltip circle icon="el-icon-check"></EleButton>
+        <EleButton tooltip circle icon="el-icon-check">{{ $t('button.button') }}</EleButton>
       </template>
       <template #code>
         <CodeTooltip class="markdown-body" />
@@ -21,9 +21,9 @@
     </demo-template>
 
     <demo-template>
-      <template #title>Preset</template>
+      <template #title>{{ $t('button.preset') }}</template>
       <template #content>
-        <EleButton type="delete">Button</EleButton>
+        <EleButton type="delete">{{ $t('button.button') }}</EleButton>
       </template>
       <template #code>
         <CodePreset class="markdown-body" />

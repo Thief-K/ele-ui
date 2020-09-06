@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import Markdown from './home-page.md'
+import Markdown from './README.md'
 export default {
   components: { Markdown }
 }

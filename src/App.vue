@@ -3,7 +3,20 @@
     <el-container class="container-wrap">
       <el-header height="42px">
         <!-- <img alt="logo" src="./assets/logo.png" style="cursor: pointer; height: 100%;" /> -->
-        <el-button type="primary" icon="el-icon-setting" circle></el-button>
+        <el-popover placement="bottom" width="300">
+          <el-form :model="settingForm" label-width="120px">
+            <el-form-item :label="$t('homePage.language')">
+              <el-select v-model="settingForm.lang">
+                <el-option label="English" value="en"></el-option>
+                <el-option label="中文" value="zh-CN"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-form>
+          <div style="text-align: center;">
+            <el-button type="success" @click="saveSetting"> {{ $t('homePage.save') }} </el-button>
+          </div>
+          <el-button slot="reference" type="primary" icon="el-icon-setting" circle></el-button>
+        </el-popover>
       </el-header>
       <el-container class="container-main">
         <el-aside>
@@ -27,6 +40,7 @@
 </template>
 
 <script>
+import { getLang, setLang } from './utils/storage'
 import treeData from '../demo/index.js'
 import 'github-markdown-css'
 
@@ -34,7 +48,10 @@ export default {
   name: 'App',
   data() {
     return {
-      treeData: treeData['en'],
+      settingForm: {
+        lang: getLang()
+      },
+      treeData: treeData[getLang()],
       component: null
     }
   },
@@ -43,7 +60,7 @@ export default {
     onNodeClick(node) {
       let component = null
       if (node === null) {
-        component = () => import('../demo/index.vue')
+        component = () => import('../demo/home-page/index.vue')
       } else {
         if (node.disabled) {
           return
@@ -51,6 +68,12 @@ export default {
         component = () => import(`../demo/${node.id}/${node.id}.vue`)
       }
       this.component = component
+    },
+
+    // Save setting
+    saveSetting() {
+      setLang(this.settingForm.lang)
+      location.reload()
     }
   },
   created() {

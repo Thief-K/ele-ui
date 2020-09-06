@@ -4,7 +4,7 @@
       <span><slot name="title"></slot></span>
       <el-popover placement="left-start">
         <slot name="code"></slot>
-        <el-button class="demo-code" type="text" slot="reference">Code</el-button>
+        <el-button class="demo-code" type="text" slot="reference">{{ $t('common.code') }}</el-button>
       </el-popover>
     </template>
     <slot name="content"></slot>

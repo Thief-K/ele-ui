@@ -9,7 +9,7 @@
 
 ## TODO
 
-- [ ] I18n
+- [x] I18n
 - [ ] Component API
 - [ ] Form
 - [ ] Table

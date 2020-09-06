@@ -1,7 +1,7 @@
 <template>
   <div>
     <demo-template>
-      <template #title>Options</template>
+      <template #title>{{ $t('select.options') }}</template>
       <template #content>
         <EleSelect v-model="value1" :options="options" />
       </template>
@@ -11,7 +11,7 @@
     </demo-template>
 
     <demo-template>
-      <template #title>Groups</template>
+      <template #title>{{ $t('select.groups') }}</template>
       <template #content>
         <EleSelect v-model="value2" :groups="groups" />
       </template>
@@ -21,10 +21,10 @@
     </demo-template>
 
     <demo-template>
-      <template #title>Data dictionary</template>
+      <template #title>{{ $t('select.dictCode') }}</template>
       <template #content>
         <EleSelect v-model="value3" dictCode="name" />
-        <p class="markdown-body">The default request url is <code>/common/getDictCode</code></p>
+        <p class="markdown-body">{{ $t('select.dictCodeDesc') }}<code>/common/getDictCode</code></p>
       </template>
       <template #code>
         <CodeDataDict class="markdown-body" />
@@ -32,11 +32,11 @@
     </demo-template>
 
     <demo-template>
-      <template #title>Custom request</template>
+      <template #title>{{ $t('select.request') }}</template>
       <template #content>
         <EleSelect v-model="value4" :request="request" />
         <p class="markdown-body">
-          The response body should like
+          {{ $t('select.requestDesc') }}
           <code> { type: 'options | groups', data: [] } </code>
         </p>
       </template>

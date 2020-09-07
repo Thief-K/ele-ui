@@ -1,6 +1,6 @@
 import Vue from 'vue'
 
-import { Button, Select, Option, OptionGroup, Tag, Tooltip, Form, FormItem } from 'element-ui'
+import { Button, Select, Option, OptionGroup, Tag, Tooltip, Form, FormItem, Input, InputNumber } from 'element-ui'
 import { Container, Header, Aside, Main, Tree, Card, Popover } from 'element-ui'
 
 // config
@@ -15,6 +15,8 @@ Vue.use(Tag)
 Vue.use(Tooltip)
 Vue.use(Form)
 Vue.use(FormItem)
+Vue.use(Input)
+Vue.use(InputNumber)
 
 // demo
 Vue.use(Container)

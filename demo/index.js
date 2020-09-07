@@ -6,8 +6,9 @@ const treeData_zh_CN = [
     disabled: true,
     children: [
       { id: 'button', label: 'Button 按钮' },
-      { id: 'select', label: 'Select 下拉框' }
-      // { id: 'test', label: 'Test 测试' }
+      { id: 'select', label: 'Select 下拉框' },
+      { id: 'form', label: 'Form 表单' },
+      { id: 'test', label: 'Test 测试' }
     ]
   }
 ]
@@ -19,8 +20,9 @@ const treeData_en = [
     disabled: true,
     children: [
       { id: 'button', label: 'Button' },
-      { id: 'select', label: 'Select' }
-      // { id: 'test', label: 'Test' }
+      { id: 'select', label: 'Select' },
+      { id: 'form', label: 'Form' },
+      { id: 'test', label: 'Test' }
     ]
   }
 ]

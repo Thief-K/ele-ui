@@ -5,8 +5,11 @@ import ElementLocale from 'element-ui/lib/locale'
 import enElementLocale from 'element-ui/lib/locale/lang/en'
 import zhCNElementLocale from 'element-ui/lib/locale/lang/zh-CN'
 
-import enLocale from '../../demo/lang/en'
-import zhCNLocale from '../../demo/lang/zh-CN'
+import enDemoLocale from '../../demo/locale/en'
+import zhCNDemoLocale from '../../demo/locale/zh-CN'
+
+import enRuleLocale from '../locale/rule/en'
+import zhCNRuleLocale from '../locale/rule/zh-CN'
 
 // install
 Vue.use(VueI18n)
@@ -17,8 +20,8 @@ const elementMessages = {
   ['zh-CN']: { ...zhCNElementLocale }
 }
 const demoMessages = {
-  ['en']: { ...enLocale },
-  ['zh-CN']: { ...zhCNLocale }
+  ['en']: { ...enDemoLocale, ...enRuleLocale },
+  ['zh-CN']: { ...zhCNDemoLocale, ...zhCNRuleLocale }
 }
 
 // i18n

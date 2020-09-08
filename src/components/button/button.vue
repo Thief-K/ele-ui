@@ -16,7 +16,7 @@
 <script>
 import preset from './preset'
 
-// Select
+// Button
 export default {
   inheritAttrs: false,
   name: 'EleButton',
@@ -36,7 +36,7 @@ export default {
     }
   },
   methods: {
-    // triggered when click button
+    // Triggered when click button
     onClick(event) {
       this.$emit('click', event)
     }

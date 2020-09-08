@@ -8,6 +8,9 @@ import zhCNElementLocale from 'element-ui/lib/locale/lang/zh-CN'
 import enDemoLocale from '../../demo/locale/en'
 import zhCNDemoLocale from '../../demo/locale/zh-CN'
 
+import enEleLocale from '../locale/ele/en'
+import zhCNEleLocale from '../locale/ele/zh-CN'
+
 import enRuleLocale from '../locale/rule/en'
 import zhCNRuleLocale from '../locale/rule/zh-CN'
 
@@ -20,8 +23,8 @@ const elementMessages = {
   ['zh-CN']: { ...zhCNElementLocale }
 }
 const demoMessages = {
-  ['en']: { ...enDemoLocale, ...enRuleLocale },
-  ['zh-CN']: { ...zhCNDemoLocale, ...zhCNRuleLocale }
+  ['en']: { ...enDemoLocale, ...enEleLocale, ...enRuleLocale },
+  ['zh-CN']: { ...zhCNDemoLocale, ...zhCNEleLocale, ...zhCNRuleLocale }
 }
 
 // i18n

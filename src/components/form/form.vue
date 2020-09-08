@@ -1,9 +1,12 @@
 <template>
   <el-card class="ele-form" shadow="never">
     <!-- title -->
-    <div v-if="title" slot="header">
+    <template v-if="title" slot="header">
       <div class="header-title">{{ title }}</div>
-    </div>
+    </template>
+    <template v-else-if="slot" slot="header">
+      <div class="header-title"><slot name="title"></slot></div>
+    </template>
 
     <el-form v-if="items && items.length > 0" ref="eleForm" :model="formData" :inline="true" :label-width="labelWidth">
       <template v-for="(item, index) in items">
@@ -61,6 +64,10 @@
         </template>
       </template>
     </el-form>
+
+    <div v-else class="empty-block">
+      <span class="empty-text">{{ $t('ele.noData') }}</span>
+    </div>
   </el-card>
 </template>
 
@@ -68,6 +75,7 @@
 import EleSelect from '../select/select'
 import cloneDeep from 'lodash/cloneDeep'
 
+// Form
 export default {
   components: { EleSelect },
   data() {
@@ -84,11 +92,15 @@ export default {
     // form items
     items: {
       type: Array,
-      required: true
+      required: false,
+      default: () => {
+        return []
+      }
     },
+    // default value
     defaultValue: {
       type: Object,
-      required: true
+      required: false
     },
     // form label width
     labelWidth: {
@@ -96,8 +108,13 @@ export default {
       default: '180px'
     }
   },
+  computed: {
+    slot() {
+      return this.$slots.title
+    }
+  },
   methods: {
-    // check whether form item show
+    // Check whether form item show
     checkShow(item) {
       if (item.show === false) {
         delete this.formData[item.id]
@@ -109,7 +126,7 @@ export default {
       return item.show !== false
     },
 
-    // generate rules
+    // Generate rules
     genRules(rules) {
       const newRules = []
       for (let key in rules) {
@@ -135,14 +152,40 @@ export default {
       return newRules
     },
 
-    // handle event
+    // check form and get parameters (for external call)
+    checkForm(callback) {
+      this.$refs.eleForm.validate(valid => {
+        if (valid && callback) {
+          callback(cloneDeep(this.formData))
+        }
+      })
+    },
+
+    // Clear validate (for external call)
+    clearValidate(props) {
+      if (this.$refs.eleForm) {
+        this.$refs.eleForm.clearValidate(props)
+      }
+    },
+
+    // Reset fields (for external call)
+    resetFields(data) {
+      this.setDefaultValue(data)
+    },
+
+    // Handle event
     handleEvent(value, callback) {
       callback && callback(value)
     },
 
-    // set default value
-    setDefaultValue() {
-      const defaultValue = !this.defaultValue ? {} : cloneDeep(this.defaultValue)
+    // Get form data
+    getFormData(data) {
+      let defaultValue
+      if (data) {
+        defaultValue = data
+      } else {
+        defaultValue = !this.defaultValue ? {} : cloneDeep(this.defaultValue)
+      }
       const formData = {}
       this.items.forEach(item => {
         if (item.elType === 'select') {
@@ -156,8 +199,15 @@ export default {
           formData[key] = defaultValue[key]
         }
       }
-      this.formData = formData
-      // this.defaultForm = cloneDeep(this.formData)
+      return formData
+    },
+
+    // Set default value
+    setDefaultValue(data) {
+      this.formData = this.getFormData(data)
+      this.$nextTick(() => {
+        this.clearValidate()
+      })
     }
   },
   created() {
@@ -185,10 +235,33 @@ export default {
   }
 }
 
+.ele-form + .ele-form {
+  margin-top: 15px;
+}
+
 .header-title {
-  display: inline-block;
-  line-height: 28px;
+  width: 100%;
+  line-height: 24px;
   font-size: 16px;
   font-weight: bold;
+}
+
+.empty-block {
+  margin-bottom: 18px;
+  min-height: 32px;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  .empty-text {
+    font-size: 13px;
+    line-height: 32px;
+    width: 50%;
+    color: #909399;
+  }
 }
 </style>

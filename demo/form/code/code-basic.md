@@ -1,6 +1,6 @@
 ```vue
 <template>
-  <EleForm title="Table" :items="items" :default-value="defaultValue" />
+  <EleForm :items="items" :default-value="defaultValue" />
 </template>
 
 <script>

@@ -13,11 +13,14 @@ export default {
     preset: 'Preset'
   },
   select: {
-    options: 'Set options',
-    groups: 'Set groups',
-    dictCode: 'Set dictCode',
+    options: 'Options',
+    groups: 'Groups',
+    dictCode: 'Dictionary code',
     dictCodeDesc: 'The default request url is ',
     request: 'Custom request',
     requestDesc: 'The response body should like'
+  },
+  form: {
+    title: 'Title'
   }
 }

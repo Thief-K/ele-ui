@@ -56,24 +56,24 @@ export default {
     }
   },
   methods: {
-    // init options
+    // Init options
     async init() {
-      // custom options
+      // Custom options
       if (this.options) {
         this.newOptions = this.options
       }
-      // custom groups
+      // Custom groups
       if (this.groups) {
         this.newGroups = this.groups
       }
-      // data dictionary
+      // Data dictionary
       if (this.dictCode) {
         const { data } = await this.$http.get('/common/getDictCode', { code: this.dictCode })
         if (data) {
           this.newOptions = data
         }
       }
-      // custom request
+      // Custom request
       if (this.request) {
         const { data } = await this.$http.get(this.request.url, this.request.param)
         if (data) {
@@ -88,7 +88,7 @@ export default {
       }
     },
 
-    // triggered when value change
+    // Triggered when value change
     onChange(val) {
       this.$emit('change', val)
     }

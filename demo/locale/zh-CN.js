@@ -13,11 +13,14 @@ export default {
     preset: '预设'
   },
   select: {
-    options: '设置 options',
-    groups: '设置 groups',
-    dictCode: '设置 dictCode',
+    options: '选项',
+    groups: '分组',
+    dictCode: '数据字典',
     dictCodeDesc: '默认请求 url 为 ',
     request: '自定义请求',
     requestDesc: '响应体应该如 '
+  },
+  form: {
+    title: '标题'
   }
 }

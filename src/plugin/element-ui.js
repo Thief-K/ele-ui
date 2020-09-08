@@ -1,7 +1,7 @@
 import Vue from 'vue'
 
 import { Button, Select, Option, OptionGroup, Tag, Tooltip, Form, FormItem, Input, InputNumber } from 'element-ui'
-import { Container, Header, Aside, Main, Tree, Card, Popover } from 'element-ui'
+import { Container, Header, Aside, Main, Tree, Card, Popover, MessageBox } from 'element-ui'
 
 // config
 Vue.prototype.$ELEMENT = { size: 'small' }
@@ -26,3 +26,4 @@ Vue.use(Main)
 Vue.use(Tree)
 Vue.use(Card)
 Vue.use(Popover)
+Vue.prototype.$alert = MessageBox.alert

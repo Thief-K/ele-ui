@@ -21,6 +21,12 @@ export default {
     requestDesc: 'The response body should like'
   },
   form: {
-    title: 'Title'
+    linkageForm: 'Linkage form',
+    title: 'Title',
+    reset: 'Reset',
+    defaultValue: 'Default value',
+    submit: 'Submit',
+    clearValidate: 'Clear validate',
+    clearSingleValidate: 'Clear single validate'
   }
 }

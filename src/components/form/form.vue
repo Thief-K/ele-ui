@@ -80,7 +80,8 @@ export default {
   components: { EleSelect },
   data() {
     return {
-      formData: {}
+      formData: {},
+      formDataBackup: {}
     }
   },
   props: {
@@ -117,10 +118,10 @@ export default {
     // Check whether form item show
     checkShow(item) {
       if (item.show === false) {
-        delete this.formData[item.id]
+        delete this.formData[item.prop]
       } else if (item.show === true) {
-        if (this.formData[item.id] === undefined) {
-          this.$set(this.formData, item.id, this.defaultForm[item.id])
+        if (this.formData[item.prop] === undefined) {
+          this.$set(this.formData, item.prop, this.formDataBackup[item.prop])
         }
       }
       return item.show !== false
@@ -199,6 +200,7 @@ export default {
           formData[key] = defaultValue[key]
         }
       }
+      this.formDataBackup = cloneDeep(formData)
       return formData
     },
 

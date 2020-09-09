@@ -3,23 +3,17 @@
     <demo-template>
       <template #title>{{ $t('common.basic') }}</template>
       <template #content>
-        <EleForm ref="form" :items="items" :default-value="defaultValue">
-          <template #title>
-            <div style="display: flex; justify-content: space-between;">
-              <div>
-                <el-button type="primary" size="mini" @click="resetForm">Reset</el-button>
-                <el-button type="primary" size="mini" @click="setDefaultValue">Default value</el-button>
-              </div>
-              <div>
-                <el-button type="success" size="mini" @click="submitForm">Submit</el-button>
-              </div>
-              <div>
-                <el-button size="mini" @click="clearValidate">Clear validate</el-button>
-                <el-button size="mini" @click="clearSingleValidate">Clear single validate</el-button>
-              </div>
-            </div>
-          </template>
-        </EleForm>
+        <EleForm :items="items1" :default-value="defaultValue1" />
+      </template>
+      <template #code>
+        <CodeBasic class="markdown-body" />
+      </template>
+    </demo-template>
+
+    <demo-template>
+      <template #title>{{ $t('form.linkageForm') }}</template>
+      <template #content>
+        <EleForm :items="items2" :default-value="defaultValue2" />
       </template>
       <template #code>
         <CodeBasic class="markdown-body" />
@@ -40,6 +34,32 @@
         <CodeTitle class="markdown-body" />
       </template>
     </demo-template>
+
+    <demo-template>
+      <template #title>{{ $t('common.basic') }}</template>
+      <template #content>
+        <EleForm ref="form" :items="items2" :default-value="defaultValue">
+          <template #title>
+            <div style="display: flex; justify-content: space-between;">
+              <div>
+                <el-button type="primary" size="mini" @click="resetForm">{{ $t('form.reset') }}</el-button>
+                <el-button type="primary" size="mini" @click="setDefaultValue">{{ $t('form.defaultValue') }}</el-button>
+              </div>
+              <div>
+                <el-button type="success" size="mini" @click="submitForm">{{ $t('form.submit') }}</el-button>
+              </div>
+              <div>
+                <el-button size="mini" @click="clearValidate">{{ $t('form.clearValidate') }}</el-button>
+                <el-button size="mini" @click="clearSingleValidate">{{ $t('form.clearSingleValidate') }}</el-button>
+              </div>
+            </div>
+          </template>
+        </EleForm>
+      </template>
+      <template #code>
+        <CodeBasic class="markdown-body" />
+      </template>
+    </demo-template>
   </div>
 </template>
 
@@ -53,7 +73,30 @@ export default {
   components: { EleForm, CodeBasic, CodeTitle },
   data() {
     return {
-      items: [
+      items1: [
+        { prop: 'input', label: 'Input', elType: 'input' },
+        { prop: 'number', label: 'Number', elType: 'number' },
+        { prop: 'select', label: 'Select', elType: 'select', dictCode: 'name' }
+      ],
+      defaultValue1: {},
+      items2: [
+        {
+          prop: 'select',
+          label: 'Select',
+          elType: 'select',
+          options: [
+            { value: '0', label: 'Close' },
+            { value: '1', label: 'Open' }
+          ],
+          callback: this.handleChange
+        },
+        { prop: 'input', label: 'Input', elType: 'input', show: false }
+      ],
+      defaultValue2: {
+        select: '0',
+        input: 'Hello World'
+      },
+      items3: [
         { prop: 'input', label: 'Input', elType: 'input', rules: { required: true } },
         { prop: 'number', label: 'Number', elType: 'number', rules: { required: true, range: [0, 100] } },
         { prop: 'select', label: 'Select', elType: 'select', dictCode: 'name', rules: { required: true } }
@@ -62,6 +105,9 @@ export default {
     }
   },
   methods: {
+    handleChange(val) {
+      this.items2[1].show = val === '1'
+    },
     setDefaultValue() {
       this.defaultValue = {
         input: 'Hello World',

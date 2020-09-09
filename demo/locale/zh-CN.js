@@ -21,6 +21,12 @@ export default {
     requestDesc: '响应体应该如 '
   },
   form: {
-    title: '标题'
+    linkageForm: '联动表单',
+    title: '标题',
+    reset: '重置',
+    defaultValue: '默认值',
+    submit: '提交',
+    clearValidate: '清除校验',
+    clearSingleValidate: '清除单个校验'
   }
 }

@@ -23,10 +23,12 @@ export default {
   form: {
     linkageForm: 'Linkage form',
     title: 'Title',
+    fullFunction: 'Full function',
     reset: 'Reset',
     defaultValue: 'Default value',
     submit: 'Submit',
     clearValidate: 'Clear validate',
-    clearSingleValidate: 'Clear single validate'
+    clearSingleValidate: 'Clear single validate',
+    formData: 'Form data'
   }
 }

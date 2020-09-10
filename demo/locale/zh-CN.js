@@ -24,9 +24,11 @@ export default {
     linkageForm: '联动表单',
     title: '标题',
     reset: '重置',
+    fullFunction: '完整功能',
     defaultValue: '默认值',
     submit: '提交',
     clearValidate: '清除校验',
-    clearSingleValidate: '清除单个校验'
+    clearSingleValidate: '清除单个校验',
+    formData: '表单数据'
   }
 }

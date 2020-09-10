@@ -26,4 +26,4 @@ Vue.use(Main)
 Vue.use(Tree)
 Vue.use(Card)
 Vue.use(Popover)
-Vue.prototype.$alert = MessageBox.alert
+Vue.prototype.$msgbox = MessageBox

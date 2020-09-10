@@ -58,10 +58,17 @@
           </EleSelect>
         </el-form-item>
 
+        <!-- button -->
+        <el-form-item v-if="item.elType === 'button' && checkShow(item)" label=" " :key="item.elType + index">
+          <EleButton v-bind="item" @click="() => item.click()">
+            {{ item.label }}
+          </EleButton>
+        </el-form-item>
+
         <!-- br -->
-        <template v-if="item.elType === 'br'">
+        <!-- <template v-if="item.elType === 'br'">
           <br :key="item.elType + index" />
-        </template>
+        </template> -->
       </template>
     </el-form>
 
@@ -73,11 +80,12 @@
 
 <script>
 import EleSelect from '../select/select'
+import EleButton from '../button/button'
 import cloneDeep from 'lodash/cloneDeep'
 
 // Form
 export default {
-  components: { EleSelect },
+  components: { EleSelect, EleButton },
   data() {
     return {
       formData: {},
@@ -153,11 +161,16 @@ export default {
       return newRules
     },
 
+    // Get form data
+    getFormData() {
+      return cloneDeep(this.formData)
+    },
+
     // check form and get parameters (for external call)
     checkForm(callback) {
       this.$refs.eleForm.validate(valid => {
         if (valid && callback) {
-          callback(cloneDeep(this.formData))
+          callback(this.getFormData())
         }
       })
     },
@@ -179,8 +192,8 @@ export default {
       callback && callback(value)
     },
 
-    // Get form data
-    getFormData(data) {
+    // Get default value
+    getDefaultValue(data) {
       let defaultValue
       if (data) {
         defaultValue = data
@@ -189,7 +202,12 @@ export default {
       }
       const formData = {}
       this.items.forEach(item => {
-        if (item.elType === 'select') {
+        if (item.prop === undefined) {
+          return
+        }
+        if (item.elType === 'input') {
+          formData[item.prop] = defaultValue[item.prop] || ''
+        } else if (item.elType === 'select') {
           formData[item.prop] = defaultValue[item.prop] || (item.multiple ? [] : '')
         } else {
           formData[item.prop] = defaultValue[item.prop] || null
@@ -206,7 +224,7 @@ export default {
 
     // Set default value
     setDefaultValue(data) {
-      this.formData = this.getFormData(data)
+      this.formData = this.getDefaultValue(data)
       this.$nextTick(() => {
         this.clearValidate()
       })

@@ -139,4 +139,9 @@ export default {
   border-radius: 6px;
   margin: 0px;
 }
+
+.el-popover > .markdown-body {
+  max-height: 620px;
+  overflow-y: auto;
+}
 </style>

@@ -1,11 +1,11 @@
 <template>
-  <el-card class="ele-form" shadow="never">
+  <el-card class="ele-card" shadow="never">
     <!-- title -->
     <template v-if="title" slot="header">
-      <div class="header-title">{{ title }}</div>
+      <div class="card-title">{{ title }}</div>
     </template>
     <template v-else-if="slot" slot="header">
-      <div class="header-title"><slot name="title"></slot></div>
+      <div class="card-title"><slot name="title"></slot></div>
     </template>
 
     <el-form v-if="items && items.length > 0" ref="eleForm" :model="formData" :inline="true" :label-width="labelWidth">
@@ -60,7 +60,7 @@
 
         <!-- button -->
         <el-form-item v-if="item.elType === 'button' && checkShow(item)" label=" " :key="item.elType + index">
-          <EleButton v-bind="item" @click="() => item.click()">
+          <EleButton v-bind="item" @click="() => item.callback()">
             {{ item.label }}
           </EleButton>
         </el-form-item>
@@ -244,22 +244,22 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-.ele-form {
-  ::v-deep .el-card__header {
-    padding: 3px 20px;
-    background-color: #ebeef5;
+<style lang="scss">
+.ele-card {
+  .el-card__header {
+    padding: 3px 20px !important;
+    background-color: #ebeef5 !important;
   }
-  ::v-deep .el-card__body {
-    padding: 18px 0 0;
+  .el-card__body {
+    padding: 18px 0 0 !important;
   }
 }
 
-.ele-form + .ele-form {
+.ele-card + .ele-card {
   margin-top: 15px;
 }
 
-.header-title {
+.card-title {
   width: 100%;
   line-height: 24px;
   font-size: 16px;

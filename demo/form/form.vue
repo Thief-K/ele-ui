@@ -3,7 +3,7 @@
     <demo-template>
       <template #title>{{ $t('common.basic') }}</template>
       <template #content>
-        <EleForm :items="items1" :default-value="defaultValue1" />
+        <EleForm :items="items1" />
       </template>
       <template #code>
         <CodeBasic class="markdown-body" />
@@ -11,12 +11,12 @@
     </demo-template>
 
     <demo-template>
-      <template #title>{{ $t('form.linkageForm') }}</template>
+      <template #title>{{ $t('form.linkage') }}</template>
       <template #content>
         <EleForm ref="form1" :items="items2" :default-value="defaultValue2" />
       </template>
       <template #code>
-        <CodeBasic class="markdown-body" />
+        <CodeLinkage class="markdown-body" />
       </template>
     </demo-template>
 
@@ -38,7 +38,7 @@
     <demo-template>
       <template #title>{{ $t('form.fullFunction') }}</template>
       <template #content>
-        <EleForm ref="form2" :items="items3" :default-value="defaultValue">
+        <EleForm ref="form2" :items="items3" :default-value="defaultValue3">
           <template #title>
             <div style="display: flex; justify-content: space-between;">
               <div>
@@ -54,7 +54,7 @@
         </EleForm>
       </template>
       <template #code>
-        <CodeBasic class="markdown-body" />
+        <CodeFull class="markdown-body" />
       </template>
     </demo-template>
   </div>
@@ -63,11 +63,13 @@
 <script>
 import EleForm from '../../src/components/form/form.vue'
 import CodeBasic from './code/code-basic.md'
+import CodeLinkage from './code/code-linkage.md'
 import CodeTitle from './code/code-title.md'
+import CodeFull from './code/code-full.md'
 import './mock'
 
 export default {
-  components: { EleForm, CodeBasic, CodeTitle },
+  components: { EleForm, CodeBasic, CodeLinkage, CodeTitle, CodeFull },
   data() {
     return {
       items1: [
@@ -75,7 +77,6 @@ export default {
         { prop: 'number', label: 'Number', elType: 'number' },
         { prop: 'select', label: 'Select', elType: 'select', dictCode: 'name' }
       ],
-      defaultValue1: {},
       items2: [
         {
           prop: 'country',
@@ -86,7 +87,7 @@ export default {
             { value: 'cn', label: 'China' },
             { value: 'us', label: 'America' }
           ],
-          callback: this.linkageChange1
+          callback: this.handleCountryChange
         },
         {
           prop: 'city',
@@ -95,23 +96,23 @@ export default {
           clearable: true,
           show: false,
           options: [],
-          callback: this.linkageChange2
+          callback: this.handleCityChange
         },
         { prop: 'address', label: 'Address', elType: 'input', show: false },
-        { label: 'Submit', elType: 'button', type: 'primary', click: () => this.submitForm('form1') }
+        { label: 'Submit', elType: 'button', type: 'primary', callback: () => this.submitForm('form1') }
       ],
       defaultValue2: {},
       items3: [
         { prop: 'input', label: 'Input', elType: 'input', rules: { required: true } },
         { prop: 'number', label: 'Number', elType: 'number', rules: { required: true, range: [0, 100] } },
         { prop: 'select', label: 'Select', elType: 'select', dictCode: 'name', rules: { required: true } },
-        { label: 'Submit', elType: 'button', type: 'primary', click: () => this.submitForm('form2') }
+        { label: 'Submit', elType: 'button', type: 'primary', callback: () => this.submitForm('form2') }
       ],
-      defaultValue: {}
+      defaultValue3: {}
     }
   },
   methods: {
-    linkageChange1(val) {
+    handleCountryChange(val) {
       this.items2[1].show = val !== ''
       if (val === 'cn') {
         this.items2[1].options = [
@@ -127,32 +128,38 @@ export default {
         ]
       }
       this.defaultValue2 = Object.assign(this.$refs.form1.getFormData(), { city: '' })
-      this.linkageChange2('')
+      this.handleCityChange('')
     },
-    linkageChange2(val) {
+
+    handleCityChange(val) {
       this.items2[2].show = val !== ''
     },
-    setDefaultValue() {
-      this.defaultValue = {
-        input: 'Hello World',
-        number: 25,
-        select: '02'
-      }
-    },
-    resetForm() {
-      this.$refs.form2.resetFields({})
-    },
+
     submitForm(form) {
       this.$refs[form].checkForm(data => {
         const json = JSON.stringify(data, null, 2)
         this.$msgbox({ title: 'Form data', message: <pre>{json}</pre> })
       })
     },
+
     clearValidate() {
       this.$refs.form2.clearValidate()
     },
+
     clearSingleValidate() {
       this.$refs.form2.clearValidate(['input'])
+    },
+
+    setDefaultValue() {
+      this.defaultValue3 = {
+        input: 'Hello World',
+        number: 25,
+        select: '02'
+      }
+    },
+
+    resetForm() {
+      this.$refs.form2.resetFields({})
     }
   }
 }

@@ -21,7 +21,7 @@ export default {
     requestDesc: 'The response body should like'
   },
   form: {
-    linkageForm: 'Linkage form',
+    linkage: 'Linkage',
     title: 'Title',
     fullFunction: 'Full function',
     reset: 'Reset',

@@ -21,7 +21,7 @@ export default {
     requestDesc: '响应体应该如 '
   },
   form: {
-    linkageForm: '联动表单',
+    linkage: '联动',
     title: '标题',
     reset: '重置',
     fullFunction: '完整功能',

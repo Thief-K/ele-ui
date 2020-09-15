@@ -11,7 +11,10 @@ import {
   FormItem,
   Input,
   InputNumber,
-  Loading
+  Loading,
+  Table,
+  TableColumn,
+  Pagination
 } from 'element-ui'
 import { Container, Header, Aside, Main, Tree, Card, Popover, MessageBox } from 'element-ui'
 
@@ -29,6 +32,9 @@ Vue.use(Form)
 Vue.use(FormItem)
 Vue.use(Input)
 Vue.use(InputNumber)
+Vue.use(Table)
+Vue.use(TableColumn)
+Vue.use(Pagination)
 Vue.use(Loading.directive)
 
 // demo

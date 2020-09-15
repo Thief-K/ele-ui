@@ -30,5 +30,9 @@ export default {
     clearValidate: 'Clear validate',
     clearSingleValidate: 'Clear single validate',
     formData: 'Form data'
+  },
+  table: {
+    multiHeader: 'Multi-level header',
+    treeTable: 'Tree table'
   }
 }

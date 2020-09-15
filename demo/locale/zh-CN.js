@@ -30,5 +30,9 @@ export default {
     clearValidate: '清除校验',
     clearSingleValidate: '清除单个校验',
     formData: '表单数据'
+  },
+  table: {
+    multiHeader: '多级表头',
+    treeTable: '树形表格'
   }
 }

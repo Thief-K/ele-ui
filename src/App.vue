@@ -32,7 +32,7 @@
           </el-tree>
         </el-aside>
         <el-main>
-          <component class="markdown-body" :is="component"></component>
+          <component :is="component"></component>
         </el-main>
       </el-container>
     </el-container>
@@ -84,8 +84,8 @@ export default {
 
 <style lang="scss">
 #app {
-  font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', Arial,
-    sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji,
+    Segoe UI Emoji;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   width: 70%;

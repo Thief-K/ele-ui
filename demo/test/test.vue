@@ -1,20 +1,11 @@
 <template>
-  <div>{{ msg }}</div>
+  <div></div>
 </template>
 
 <script>
-import cloneDeep from 'lodash/cloneDeep'
-
 export default {
   data() {
-    return {
-      msg: '123'
-    }
-  },
-  created() {
-    const a = { b: 'c' }
-    const b = cloneDeep(a)
-    console.log(a === b, b)
+    return {}
   }
 }
 </script>

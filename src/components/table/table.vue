@@ -1,5 +1,5 @@
 <template>
-  <el-card class="ele-card" shadow="never">
+  <el-card class="ele-card ele-table" shadow="never">
     <!-- title -->
     <template v-if="title" slot="header">
       <div class="card-title">{{ title }}</div>
@@ -27,6 +27,7 @@
       v-on="listeners"
       @current-change="onCurrentChange"
       @select="onSelect"
+      @select-all="onSelectAll"
       @selection-change="onSelectionChange"
     >
       <!-- index -->
@@ -36,8 +37,8 @@
       <el-table-column v-if="multiple === true" type="selection" width="42" align="center"></el-table-column>
 
       <!-- column -->
-      <template v-for="column in columnData">
-        <table-column :column-data="column" :key="column.prop + column.i18n"></table-column>
+      <template v-for="column in columns">
+        <table-column :column="column" :key="column.prop + column.i18n"></table-column>
       </template>
     </el-table>
 
@@ -62,7 +63,7 @@
 
 <script>
 import EleButton from '../button/button'
-import TableColumn from './src/table-column'
+import TableColumn from './table-column'
 
 export default {
   inheritAttrs: false,
@@ -100,7 +101,7 @@ export default {
       type: String
     },
     // column data
-    columnData: {
+    columns: {
       type: Array,
       required: true
     },
@@ -125,11 +126,14 @@ export default {
     pageSizes: {
       type: Array,
       default: () => {
-        return [10, 20, 30, 50, 100, 300, 500, 1000]
+        return [10, 30, 50, 100, 300, 500, 1000]
       }
     }
   },
   computed: {
+    slot() {
+      return this.$slots.title
+    },
     listeners() {
       return { ...this.$listeners }
     },
@@ -152,7 +156,7 @@ export default {
     // Triggered when row select
     onSelect(rows, row) {
       // handle parent nodes checked issue when multiple is true and tree table is open
-      if (this.$attrs.rowKey && this.multiple) {
+      if ((this.$attrs['rowKey'] || this.$attrs['row-key']) && this.multiple) {
         const selected = rows.find(item => item === row) !== undefined
         if (row.children) {
           // parent node synchronize children nodes
@@ -165,6 +169,17 @@ export default {
           const intersection = parent.children.filter(child => rows.includes(child))
           this.toggleRowSelection([parent], intersection.length === parent.children.length)
         }
+      }
+    },
+
+    // Triggered when row select
+    onSelectAll(rows) {
+      if (rows.length > 0) {
+        rows.forEach(row => {
+          this.onSelect([row], row)
+        })
+      } else {
+        this.toggleRowSelection(this.tableData, false)
       }
     },
 
@@ -198,12 +213,12 @@ export default {
       if (typeof param === 'function') {
         this.tableData.forEach(row => {
           if (param && param(row)) {
-            this.$refs.commonTable.toggleRowSelection(row, flag)
+            this.$refs.eleTable.toggleRowSelection(row, flag)
           }
         })
       } else if (Array.isArray(param)) {
         param.forEach(row => {
-          this.$refs.commonTable.toggleRowSelection(row, flag)
+          this.$refs.eleTable.toggleRowSelection(row, flag)
         })
       }
     },
@@ -256,6 +271,14 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+.ele-table {
+  .el-card__body {
+    padding: 10px 10px !important;
+  }
+}
+</style>
 
 <style lang="scss" scoped>
 .table-page {

@@ -8,7 +8,7 @@ const treeData_zh_CN = [
       { id: 'button', label: 'Button 按钮' },
       { id: 'select', label: 'Select 下拉框' },
       { id: 'form', label: 'Form 表单' },
-      { id: 'test', label: 'Test 测试' }
+      { id: 'table', label: 'Table 表格' }
     ]
   }
 ]
@@ -22,7 +22,7 @@ const treeData_en = [
       { id: 'button', label: 'Button' },
       { id: 'select', label: 'Select' },
       { id: 'form', label: 'Form' },
-      { id: 'test', label: 'Test' }
+      { id: 'table', label: 'Table' }
     ]
   }
 ]

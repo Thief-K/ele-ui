@@ -1,12 +1,12 @@
 <template>
-  <!-- 多级表头 -->
-  <el-table-column v-if="showMultiHead" align="center" :label="column.i18n || column.label">
-    <template v-for="(item, index) in column.children">
-      <table-column :column="item" :key="Math.random() + index"></table-column>
+  <!-- multi-level header -->
+  <el-table-column v-if="multiHeader" align="center" :label="column.i18n || column.label">
+    <template v-for="item in column.children">
+      <table-column :column="item" :key="item.prop + item.label"></table-column>
     </template>
   </el-table-column>
 
-  <!-- 普通表头 -->
+  <!-- normal header -->
   <el-table-column
     v-else
     :show-overflow-tooltip="showTooltip(column)"
@@ -18,37 +18,38 @@
     :align="column.align"
     :header-align="column.headerAlign"
   >
-    <template slot-scope="scope">
+    <template v-slot="scope">
       <!-- href -->
       <template v-if="column.type === 'href'">
-        <hx-button
-          v-if="filterHref(scope.row, column.filterMethod, scope.row[column.prop])"
+        <el-button
+          v-if="filterShow(scope.row, column.prop, column.filter)"
           type="text"
-          :label="scope.row[column.prop]"
-          @click="handleClick(scope.row, scope.$index, column.prop, column.method)"
+          @click="handleEvent(scope.row, column.prop, scope.$index, column.callback)"
         >
-        </hx-button>
-        <span v-else v-html="scope.row[column.prop]" style="margin-left: 6px;"></span>
+          {{ scope.row[column.prop] }}
+        </el-button>
+        <span v-else>{{ scope.row[column.prop] }}</span>
       </template>
 
       <!-- status -->
       <template v-if="column.type === 'status'">
-        <span class="circle-status" :style="{ backgroundColor: filterStatus(scope.row, column.filterMethod) }"></span>
+        <span class="circle-status" :style="{ backgroundColor: filterAttr(scope.row, column.prop, column.filter) }"></span>
       </template>
 
       <!-- tag -->
       <template v-if="column.type === 'tag'">
-        <el-tag :type="filterTag(scope.row, column.filterMethod)" size="small">{{ scope.row[column.prop] }}</el-tag>
+        <el-tag v-if="filterShow(scope.row, column.prop)" :type="filterAttr(scope.row, column.prop, column.filter)" size="small">
+          {{ scope.row[column.prop] }}
+        </el-tag>
+        <span v-else>{{ scope.row[column.prop] }}</span>
       </template>
 
       <!-- switch -->
       <template v-if="column.type === 'switch' && checkEdit(scope.row, column.editFilter)">
         <el-switch
           v-model="scope.row[column.prop]"
-          active-color="#1d8bd8"
-          :active-value="column.activeValue"
-          :inactive-value="column.inactiveValue"
-          @change="value => valueChange(value, scope.row, column.method)"
+          v-bind="column"
+          @change="handleEvent(scope.row, column.prop, scope.$index, column.callback)"
         >
         </el-switch>
       </template>
@@ -57,8 +58,7 @@
       <template v-if="column.type === 'input' && checkEdit(scope.row, column.editFilter)">
         <el-input
           v-model.trim="scope.row[column.prop]"
-          @change="value => valueChange(value, scope.row, column.method)"
-          style="width: 100%;"
+          @change="handleEvent(scope.row, column.prop, scope.$index, column.callback)"
         >
         </el-input>
       </template>
@@ -66,46 +66,39 @@
       <!-- number -->
       <template v-if="column.type === 'number' && checkEdit(scope.row, column.editFilter)">
         <el-input-number
-          v-model.trim="scope.row[column.prop]"
-          :min="column.min"
-          :max="column.max"
-          :precision="column.precision"
-          :controls="column.controls"
-          @change="value => valueChange(value, scope.row, column.method)"
-          style="width: 100%;"
+          v-model="scope.row[column.prop]"
+          v-bind="column"
+          @change="handleEvent(scope.row, column.prop, scope.$index, column.callback)"
         >
         </el-input-number>
       </template>
 
       <!-- select -->
       <template v-if="column.type === 'select' && checkEdit(scope.row, column.editFilter)">
-        <hx-select
+        <EleSelect
           v-model="scope.row[column.prop]"
-          :code-type="column.codeType"
-          :clear="column.clear"
-          :disabled="column.disabled"
-          @change="value => valueChange(value, scope.row, column.method)"
-        >
-        </hx-select>
+          v-bind="column"
+          @change="handleEvent(scope.row, column.prop, scope.$index, column.callback)"
+        />
       </template>
 
-      <!-- operations -->
-      <template v-if="column.type === 'operations'">
+      <!-- operation -->
+      <template v-if="column.type === 'operation'">
         <template v-for="item in column.operations">
-          <hx-button
-            v-if="filterOperation(scope.row, item.filterMethod)"
-            table
+          <EleButton
+            v-if="filterShow(scope.row, column.prop, column.filter, true)"
+            tooltip
+            circle
             :type="item.type"
-            :label="item.i18n"
-            :disabled="disableFilter(scope.row, item.disabledMethod)"
-            @click="() => handleClick(scope.row, scope.$index, column.prop, item.method)"
+            @click="handleEvent(scope.row, column.prop, scope.$index, column.callback)"
             :key="item.label"
           >
-          </hx-button>
+            {{ item.label }}
+          </EleButton>
         </template>
       </template>
 
-      <!-- content -->
+      <!-- default -->
       <template v-if="!column.type">
         <span v-html="formatContent(scope.row[column.prop], scope.row, column.formatMethod)"></span>
       </template>
@@ -114,56 +107,44 @@
 </template>
 
 <script>
-// import HxButton from '../../button'
-// import HxSelect from '../../select'
+import EleButton from '../button/button'
+import EleSelect from '../select/select'
 
 export default {
   name: 'TableColumn',
-  // components: { HxButton, HxSelect },
+  components: { EleButton, EleSelect },
   props: {
     column: {
       type: Object
     }
   },
   computed: {
-    showMultiHead() {
+    multiHeader() {
       return this.column.children && this.column.children.length > 0
     }
   },
   methods: {
-    // 超链接、操作按钮点击时回调
-    handleClick(row, index, prop, callback) {
-      if (callback) {
-        callback(row, index, prop)
-      }
+    // Callback when trigger event
+    handleEvent(row, prop, index, callback) {
+      callback && callback({ row, prop, value: row[prop], index })
     },
 
-    // 超链接过滤
-    filterHref(row, filterMethod, content) {
-      if (content === null || content === undefined) {
+    // Filter display
+    filterShow(row, prop, callback, pass = false) {
+      if (!row[prop] && row[prop] !== 0 && !pass) {
         return false
       }
-      if (filterMethod) {
-        return filterMethod(row)
+      if (callback) {
+        return callback({ row, value: row[prop] })
       } else {
         return true
       }
     },
 
-    // 状态过滤
-    filterStatus(row, filterMethod) {
-      if (filterMethod) {
-        let type = filterMethod(row)
-        return type === 'danger' ? '#f56c6c' : '#67c23a'
-      } else {
-        return ''
-      }
-    },
-
-    // 标签过滤
-    filterTag(row, filterMethod) {
-      if (filterMethod) {
-        return filterMethod(row)
+    // Filter attribute
+    filterAttr(row, prop, callback) {
+      if (callback) {
+        return callback({ row, value: row[prop] })
       } else {
         return ''
       }
@@ -187,25 +168,6 @@ export default {
       }
     },
 
-    // 行内按钮禁用状态过滤
-    disableFilter(row, filterMethod) {
-      if (filterMethod) {
-        return filterMethod(row)
-      } else {
-        return false
-      }
-    },
-
-    // 行内编辑时回调
-    valueChange(value, row, callback) {
-      if (!row.op) {
-        row.op = 'edit'
-      }
-      if (callback) {
-        callback(value, row)
-      }
-    },
-
     // 格式化内容
     formatContent(content, row, formatMethod) {
       if (formatMethod) {
@@ -216,7 +178,7 @@ export default {
 
     // 提示
     showTooltip(column) {
-      const array = ['status', 'operations', 'switch', 'input', 'number', 'select']
+      const array = ['status', 'operation', 'switch', 'input', 'number', 'select']
       if (array.includes(column.type) && !column.editFilter) {
         return false
       } else {
@@ -226,8 +188,8 @@ export default {
 
     // 获取操作列宽
     getOperationWidth(data) {
-      let width = data.width || (data.type === 'operations' ? data.operations.length * 44 : '')
-      return width && width < 88 ? 88 : width
+      let width = data.width || (data.type === 'operation' ? data.operations.length * 47 : '')
+      return width && width < 94 ? 94 : width
     }
   }
 }

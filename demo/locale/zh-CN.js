@@ -1,7 +1,8 @@
 export default {
   common: {
     code: '代码',
-    basic: '基础用法'
+    basic: '基础用法',
+    fullFunction: '完整功能'
   },
   homePage: {
     language: '语言',
@@ -24,7 +25,6 @@ export default {
     linkage: '联动',
     title: '标题',
     reset: '重置',
-    fullFunction: '完整功能',
     defaultValue: '默认值',
     submit: '提交',
     clearValidate: '清除校验',
@@ -33,6 +33,7 @@ export default {
   },
   table: {
     multiHeader: '多级表头',
-    treeTable: '树形表格'
+    treeTable: '树形表格',
+    lazyLoad: '懒加载'
   }
 }

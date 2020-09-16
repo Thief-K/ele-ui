@@ -1,7 +1,7 @@
 export default {
   add: { type: '', icon: 'el-icon-plus', round: true },
   edit: { type: '', icon: 'el-icon-edit-outline', round: true },
-  delete: { type: 'danger', icon: '', round: true },
+  delete: { type: 'danger', icon: 'el-icon-delete', round: true },
   confirm: { type: 'primary', icon: 'el-icon-check' },
   cancel: { type: '', icon: 'el-icon-close' },
   pre: { type: '', icon: 'el-icon-d-arrow-left' },

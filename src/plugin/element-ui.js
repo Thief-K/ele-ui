@@ -16,7 +16,7 @@ import {
   TableColumn,
   Pagination
 } from 'element-ui'
-import { Container, Header, Aside, Main, Tree, Card, Popover, MessageBox } from 'element-ui'
+import { Container, Header, Aside, Main, Tree, Card, Popover, MessageBox, Switch } from 'element-ui'
 
 // config
 Vue.prototype.$ELEMENT = { size: 'small' }
@@ -35,6 +35,7 @@ Vue.use(InputNumber)
 Vue.use(Table)
 Vue.use(TableColumn)
 Vue.use(Pagination)
+Vue.use(Switch)
 Vue.use(Loading.directive)
 
 // demo
@@ -46,3 +47,4 @@ Vue.use(Tree)
 Vue.use(Card)
 Vue.use(Popover)
 Vue.prototype.$msgbox = MessageBox
+Vue.prototype.$alert = MessageBox.alert

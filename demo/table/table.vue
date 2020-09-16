@@ -29,6 +29,26 @@
         <CodeHeader class="markdown-body" />
       </template>
     </demo-template>
+
+    <demo-template>
+      <template #title>{{ $t('table.lazyLoad') }}</template>
+      <template #content>
+        <EleTable ref="table4" :url="url4" :toolbar="toolbar4" :columns="columns4" row-key="id" lazy :load="load" />
+      </template>
+      <template #code>
+        <CodeHeader class="markdown-body" />
+      </template>
+    </demo-template>
+
+    <demo-template>
+      <template #title>{{ $t('common.fullFunction') }}</template>
+      <template #content>
+        <EleTable ref="table5" :url="url5" :toolbar="toolbar5" :columns="columns5" index multiple />
+      </template>
+      <template #code>
+        <CodeHeader class="markdown-body" />
+      </template>
+    </demo-template>
   </div>
 </template>
 
@@ -45,9 +65,13 @@ export default {
       url1: '/common/table1',
       url2: '/common/table2',
       url3: '/common/table3',
+      url4: '/common/table4',
+      url5: '/common/table5',
       toolbar1: [{ type: 'query', label: 'query', callback: () => this.query(1) }],
       toolbar2: [{ type: 'query', label: 'query', callback: () => this.query(2) }],
       toolbar3: [{ type: 'query', label: 'query', callback: () => this.query(3) }],
+      toolbar4: [{ type: 'query', label: 'query', callback: () => this.query(4) }],
+      toolbar5: [{ type: 'query', label: 'query', callback: () => this.query(5) }],
       columns1: [
         { label: 'no', prop: 'no' },
         { label: 'name', prop: 'name' },
@@ -72,13 +96,73 @@ export default {
         { label: 'no', prop: 'no' },
         { label: 'name', prop: 'name' },
         { label: 'age', prop: 'age' }
+      ],
+      columns4: [
+        { label: 'name', prop: 'name' },
+        { label: 'talent', prop: 'talent' },
+        { label: 'age', prop: 'age' }
+      ],
+      columns5: [
+        { label: '', prop: 'status', type: 'status', align: 'center', filter: this.statusFilter },
+        { label: 'name', prop: 'name' }, // TODO
+        { label: 'gender', prop: 'gender', type: 'select', dictCode: 'gender' },
+        { label: 'age', prop: 'age', type: 'input' },
+        { label: 'hobby', prop: 'hobby', type: 'tag', filter: this.hobbyFilter },
+        { label: 'score', prop: 'score', type: 'number', min: 0, max: 100, precision: 0 },
+        { label: 'website', prop: 'website', type: 'href', filter: this.websiteFilter, callback: this.clickWebsite },
+        { label: 'subscribe', prop: 'subscribe', type: 'switch', activeColor: '#1d8bd8', activeValue: 1, inactiveValue: 0 },
+        {
+          label: 'operation',
+          prop: 'operation',
+          type: 'operation',
+          operations: [
+            { type: 'edit', label: 'edit', method: this.edit },
+            { type: 'delete', label: 'delete', method: this.delete }
+          ]
+        }
       ]
     }
   },
   methods: {
     query(number) {
       this.$refs['table' + number].queryData()
+    },
+
+    load(tree, treeNode, resolve) {
+      setTimeout(() => {
+        resolve([{ id: Math.random() + '', name: 'cat', talent: 'miao', age: 1, hasChildren: true }])
+      }, 500)
+    },
+
+    statusFilter({ row }) {
+      if (row.score > 66) return '#67c23a'
+      else if (row.score > 33) return '#03a9f4'
+      else return '#f56c6c'
+    },
+
+    websiteFilter({ row }) {
+      return row.subscribe === 1
+    },
+
+    clickWebsite({ value }) {
+      this.$alert(value)
+    },
+
+    hobbyFilter({ value }) {
+      if (value === 'game') return 'success'
+      if (value === 'movie') return 'danger'
+      if (value === 'music') return 'primary'
+      return 'info'
     }
+  },
+  created() {
+    this.$nextTick(() => {
+      this.query(1)
+      this.query(2)
+      this.query(3)
+      this.query(4)
+      this.query(5)
+    })
   }
 }
 </script>

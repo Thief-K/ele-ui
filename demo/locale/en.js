@@ -1,7 +1,8 @@
 export default {
   common: {
     code: 'Code',
-    basic: 'Basic usage'
+    basic: 'Basic usage',
+    fullFunction: 'Full function'
   },
   homePage: {
     language: 'Language',
@@ -23,7 +24,6 @@ export default {
   form: {
     linkage: 'Linkage',
     title: 'Title',
-    fullFunction: 'Full function',
     reset: 'Reset',
     defaultValue: 'Default value',
     submit: 'Submit',
@@ -33,6 +33,7 @@ export default {
   },
   table: {
     multiHeader: 'Multi-level header',
-    treeTable: 'Tree table'
+    treeTable: 'Tree table',
+    lazyLoad: 'Lazy load'
   }
 }

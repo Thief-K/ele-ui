@@ -36,7 +36,7 @@
     </demo-template>
 
     <demo-template>
-      <template #title>{{ $t('form.fullFunction') }}</template>
+      <template #title>{{ $t('common.fullFunction') }}</template>
       <template #content>
         <EleForm ref="form2" :items="items3" :default-value="defaultValue3">
           <template #title>

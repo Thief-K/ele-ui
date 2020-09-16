@@ -38,7 +38,7 @@
 
       <!-- column -->
       <template v-for="column in columns">
-        <table-column :column="column" :key="column.prop + column.i18n"></table-column>
+        <table-column :column="column" :key="column.prop + column.label"></table-column>
       </template>
     </el-table>
 
@@ -117,7 +117,7 @@ export default {
       type: Object,
       default: () => {
         return {
-          pagerCount: 9,
+          pagerCount: 5,
           layout: 'total, sizes, prev, pager, next'
         }
       }
@@ -174,12 +174,16 @@ export default {
 
     // Triggered when row select
     onSelectAll(rows) {
-      if (rows.length > 0) {
-        rows.forEach(row => {
+      const parentRows = rows.filter(v => v.children)
+      if (parentRows.length > 0) {
+        parentRows.forEach(row => {
           this.onSelect([row], row)
         })
       } else {
-        this.toggleRowSelection(this.tableData, false)
+        this.toggleRowSelection(row => {
+          this.toggleRowSelection(row.children, false)
+          return true
+        }, false)
       }
     },
 

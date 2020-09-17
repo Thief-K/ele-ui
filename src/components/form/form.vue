@@ -18,12 +18,7 @@
           :rules="genRules(item.rules)"
           :key="item.prop + item.elType + index"
         >
-          <el-input
-            v-model.trim="formData[item.prop]"
-            v-bind="item"
-            @change="handleEvent(formData[item.prop], item.callback)"
-          >
-          </el-input>
+          <el-input v-model.trim="formData[item.prop]" v-bind="item" @change="handleEvent(formData[item.prop], item.callback)" />
         </el-form-item>
 
         <!-- number -->
@@ -38,8 +33,7 @@
             v-model="formData[item.prop]"
             v-bind="item"
             @change="handleEvent(formData[item.prop], item.callback)"
-          >
-          </el-input-number>
+          />
         </el-form-item>
 
         <!-- select -->
@@ -50,12 +44,7 @@
           :rules="genRules(item.rules)"
           :key="item.prop + item.elType + index"
         >
-          <EleSelect
-            v-model="formData[item.prop]"
-            v-bind="item"
-            @change="handleEvent(formData[item.prop], item.callback)"
-          >
-          </EleSelect>
+          <EleSelect v-model="formData[item.prop]" v-bind="item" @change="handleEvent(formData[item.prop], item.callback)" />
         </el-form-item>
 
         <!-- button -->

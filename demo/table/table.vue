@@ -26,7 +26,7 @@
         <EleTable ref="table3" :url="url3" :toolbar="toolbar3" :columns="columns3" row-key="id" :multiple="true" />
       </template>
       <template #code>
-        <CodeHeader class="markdown-body" />
+        <CodeTree class="markdown-body" />
       </template>
     </demo-template>
 
@@ -36,7 +36,7 @@
         <EleTable ref="table4" :url="url4" :toolbar="toolbar4" :columns="columns4" row-key="id" lazy :load="load" />
       </template>
       <template #code>
-        <CodeHeader class="markdown-body" />
+        <CodeLazy class="markdown-body" />
       </template>
     </demo-template>
 
@@ -46,7 +46,7 @@
         <EleTable ref="table5" :url="url5" :toolbar="toolbar5" :columns="columns5" index multiple />
       </template>
       <template #code>
-        <CodeHeader class="markdown-body" />
+        <CodeFull class="markdown-body" />
       </template>
     </demo-template>
   </div>
@@ -55,11 +55,14 @@
 <script>
 import EleTable from '../../src/components/table/table.vue'
 import CodeBasic from './code/code-basic.md'
-import CodeHeader from './code/code-basic.md'
+import CodeHeader from './code/code-header.md'
+import CodeTree from './code/code-tree.md'
+import CodeLazy from './code/code-lazy.md'
+import CodeFull from './code/code-full.md'
 import './mock'
 
 export default {
-  components: { EleTable, CodeBasic, CodeHeader },
+  components: { EleTable, CodeBasic, CodeHeader, CodeTree, CodeLazy, CodeFull },
   data() {
     return {
       url1: '/common/table1',
@@ -104,9 +107,9 @@ export default {
       ],
       columns5: [
         { label: '', prop: 'status', type: 'status', align: 'center', filter: this.statusFilter },
-        { label: 'name', prop: 'name' }, // TODO
+        { label: 'name', prop: 'name' },
         { label: 'gender', prop: 'gender', type: 'select', dictCode: 'gender' },
-        { label: 'age', prop: 'age', type: 'input' },
+        { label: 'age', prop: 'age', type: 'input', edit: this.editFilter },
         { label: 'hobby', prop: 'hobby', type: 'tag', filter: this.hobbyFilter },
         { label: 'score', prop: 'score', type: 'number', min: 0, max: 100, precision: 0 },
         { label: 'website', prop: 'website', type: 'href', filter: this.websiteFilter, callback: this.clickWebsite },
@@ -116,8 +119,8 @@ export default {
           prop: 'operation',
           type: 'operation',
           operations: [
-            { type: 'edit', label: 'edit', method: this.edit },
-            { type: 'delete', label: 'delete', method: this.delete }
+            { type: 'edit', label: 'edit', callback: this.edit },
+            { type: 'delete', label: 'delete', callback: this.delete }
           ]
         }
       ]
@@ -140,6 +143,10 @@ export default {
       else return '#f56c6c'
     },
 
+    editFilter({ row }) {
+      return row.subscribe === 1
+    },
+
     websiteFilter({ row }) {
       return row.subscribe === 1
     },
@@ -153,6 +160,16 @@ export default {
       if (value === 'movie') return 'danger'
       if (value === 'music') return 'primary'
       return 'info'
+    },
+
+    edit({ row }) {
+      const json = JSON.stringify(row, null, 2)
+      this.$msgbox({ title: 'Form data', message: <pre>{json}</pre> })
+    },
+
+    delete({ row }) {
+      const json = JSON.stringify(row, null, 2)
+      this.$msgbox({ title: 'Form data', message: <pre>{json}</pre> })
     }
   },
   created() {

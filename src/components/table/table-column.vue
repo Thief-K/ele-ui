@@ -12,7 +12,7 @@
     :show-overflow-tooltip="showTooltip(column)"
     :fixed="column.fixed"
     :label="column.i18n || column.label"
-    :width="getOperationWidth(column)"
+    :width="calcOperationWidth(column)"
     :sortable="column.sort"
     :prop="column.prop"
     :align="column.align"
@@ -45,41 +45,46 @@
       </template>
 
       <!-- switch -->
-      <template v-if="column.type === 'switch' && checkEdit(scope.row, column.editFilter)">
+      <template v-if="column.type === 'switch'">
         <el-switch
-          v-model="scope.row[column.prop]"
-          v-bind="column"
-          @change="handleEvent(scope.row, column.prop, scope.$index, column.callback)"
-        >
-        </el-switch>
-      </template>
-
-      <!-- input -->
-      <template v-if="column.type === 'input' && checkEdit(scope.row, column.editFilter)">
-        <el-input
-          v-model.trim="scope.row[column.prop]"
-          @change="handleEvent(scope.row, column.prop, scope.$index, column.callback)"
-        >
-        </el-input>
-      </template>
-
-      <!-- number -->
-      <template v-if="column.type === 'number' && checkEdit(scope.row, column.editFilter)">
-        <el-input-number
-          v-model="scope.row[column.prop]"
-          v-bind="column"
-          @change="handleEvent(scope.row, column.prop, scope.$index, column.callback)"
-        >
-        </el-input-number>
-      </template>
-
-      <!-- select -->
-      <template v-if="column.type === 'select' && checkEdit(scope.row, column.editFilter)">
-        <EleSelect
+          v-if="filterEdit(scope.row, column.edit)"
           v-model="scope.row[column.prop]"
           v-bind="column"
           @change="handleEvent(scope.row, column.prop, scope.$index, column.callback)"
         />
+        <span v-else>{{ scope.row[column.prop] }}</span>
+      </template>
+
+      <!-- input -->
+      <template v-if="column.type === 'input'">
+        <el-input
+          v-if="filterEdit(scope.row, column.edit)"
+          v-model.trim="scope.row[column.prop]"
+          @change="handleEvent(scope.row, column.prop, scope.$index, column.callback)"
+        />
+        <span v-else>{{ scope.row[column.prop] }}</span>
+      </template>
+
+      <!-- number -->
+      <template v-if="column.type === 'number'">
+        <el-input-number
+          v-if="filterEdit(scope.row, column.edit)"
+          v-model="scope.row[column.prop]"
+          v-bind="column"
+          @change="handleEvent(scope.row, column.prop, scope.$index, column.callback)"
+        />
+        <span v-else>{{ scope.row[column.prop] }}</span>
+      </template>
+
+      <!-- select -->
+      <template v-if="column.type === 'select'">
+        <EleSelect
+          v-if="filterEdit(scope.row, column.edit)"
+          v-model="scope.row[column.prop]"
+          v-bind="column"
+          @change="handleEvent(scope.row, column.prop, scope.$index, column.callback)"
+        />
+        <span v-else>{{ scope.row[column.prop] }}</span>
       </template>
 
       <!-- operation -->
@@ -90,7 +95,7 @@
             tooltip
             circle
             :type="item.type"
-            @click="handleEvent(scope.row, column.prop, scope.$index, column.callback)"
+            @click="handleEvent(scope.row, column.prop, scope.$index, item.callback)"
             :key="item.label"
           >
             {{ item.label }}
@@ -100,7 +105,7 @@
 
       <!-- default -->
       <template v-if="!column.type">
-        <span v-html="formatContent(scope.row[column.prop], scope.row, column.formatMethod)"></span>
+        <span>{{ scope.row[column.prop] }}</span>
       </template>
     </template>
   </el-table-column>
@@ -150,44 +155,27 @@ export default {
       }
     },
 
-    // 行内按钮过滤
-    filterOperation(row, filterMethod) {
-      if (filterMethod) {
-        return filterMethod(row)
+    // Filter editable
+    filterEdit(row, callback) {
+      if (callback) {
+        return callback({ row })
       } else {
         return true
       }
     },
 
-    // 行内编辑过滤
-    checkEdit(row, filterMethod) {
-      if (filterMethod) {
-        return filterMethod(row)
-      } else {
-        return true
-      }
-    },
-
-    // 格式化内容
-    formatContent(content, row, formatMethod) {
-      if (formatMethod) {
-        return formatMethod(content, row)
-      }
-      return content
-    },
-
-    // 提示
+    // Whether show tooltip
     showTooltip(column) {
       const array = ['status', 'operation', 'switch', 'input', 'number', 'select']
-      if (array.includes(column.type) && !column.editFilter) {
+      if (array.includes(column.type) && !column.edit) {
         return false
       } else {
         return true
       }
     },
 
-    // 获取操作列宽
-    getOperationWidth(data) {
+    // Calculate operation column width
+    calcOperationWidth(data) {
       let width = data.width || (data.type === 'operation' ? data.operations.length * 47 : '')
       return width && width < 94 ? 94 : width
     }

@@ -8,21 +8,22 @@
 
 <script>
 import throttle from 'lodash/throttle'
+import Mock from 'better-mock'
 
 export default {
   data() {
     const options = []
-    const num = 100
-    for (let i = 1; i < num; i++) {
+    const num = Mock.Random.integer(1, 1000)
+    for (let i = 1; i <= num; i++) {
       options.push({
         date: i,
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1518 弄'
+        name: Mock.Random.name(),
+        address: Mock.Random.city()
       })
     }
     return {
       tableData: [],
-      height: 500,
+      height: 300,
       config: {
         data: options,
         itemHeight: 40
@@ -32,6 +33,7 @@ export default {
   directives: {
     virtualScroll: {
       bind(el, binding, vnode) {
+        // Create wrapper
         const context = vnode.context
         const config = binding.value
         const wrapper = el.querySelector('.el-table__body-wrapper')
@@ -44,29 +46,49 @@ export default {
         })
         wrapper.insertBefore(box, wrapper.firstChild)
 
-        // scroll event
+        // Calculate best number of per range
+        const NUMBER = context.height / config.itemHeight - 1
+
+        // Define variables
+        let lastTop = 0
+        let lastRange = 0
+        let updateFlag = false
+        // Add event listener (use throttle to improve performance)
         wrapper.onscroll = throttle(e => {
+          // Define constant
           const top = e.target.scrollTop
           const ratio = top / config.itemHeight
           const index = Math.floor(ratio)
-          console.log(top, ratio % 5, index)
 
-          if (index % 10 === 0 && ratio % 5 === 0) {
-            context.tableData = binding.value.data.slice(index, index + 20)
-            if (index !== 0) {
-              // body.style.marginTop = `${top}px`
-              body.style.transform = `translateY(${top}px)`
-            }
-            if (index === 0) {
-              // body.style.marginTop = '0px'
-              body.style.transform = `translateY(0px)`
-              context.tableData = binding.value.data.slice(0, index + 20)
+          // Calculate move type
+          const move = top > lastTop ? 'down' : 'up'
+          lastTop = top
+
+          // Avoid redundant execution
+          const currentRange = Math.floor(index / NUMBER)
+          if (currentRange !== lastRange && updateFlag === true) {
+            updateFlag = false
+          }
+
+          // Virtual scroll & Rerender
+          if (updateFlag === false) {
+            if (
+              (move === 'down' && top > config.itemHeight * (lastRange + 1) * NUMBER) ||
+              (move === 'up' && top < config.itemHeight * lastRange * NUMBER)
+            ) {
+              const currentRangeIndex = currentRange * NUMBER
+              context.tableData = binding.value.data.slice(currentRangeIndex, currentRangeIndex + NUMBER * 2)
+              const offset = config.itemHeight * currentRangeIndex
+              body.style.transform = `translateY(${offset}px)`
+              // body.style.marginTop = `${offset}px` // same effect
+              lastRange = currentRange
+              updateFlag = true
             }
           }
-          // body.style.transform = `translateY(${top}px)`
-        }, 0)
+        }, 30)
 
-        context.tableData = binding.value.data.slice(0, 20)
+        // Init view
+        context.tableData = binding.value.data.slice(0, NUMBER * 2)
       }
     }
   }

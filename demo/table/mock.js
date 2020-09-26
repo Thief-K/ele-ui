@@ -101,3 +101,21 @@ Mock.mock(/common\/table5/, 'get', {
     total: 150
   }
 })
+
+Mock.mock(/common\/table6/, 'get', {
+  data: {
+    result: () => {
+      const result = []
+      for (let i = 1; i <= 10000; i++) {
+        result.push({
+          no: i,
+          name: Random.name(),
+          gender: '0' + Random.character('12') === '01' ? 'Male' : 'Female',
+          age: Random.integer(10, 35)
+        })
+      }
+      return result
+    },
+    total: 5
+  }
+})

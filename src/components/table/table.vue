@@ -19,6 +19,7 @@
 
     <el-table
       ref="eleTable"
+      v-virtual-scroll="virtualScrollConfig"
       v-loading="loading"
       v-bind="$attrs"
       :data="tableData"
@@ -64,11 +65,13 @@
 <script>
 import EleButton from '../button/button'
 import TableColumn from './table-column'
+import virtualScrollDirective from './virtual-scroll'
 
 export default {
   inheritAttrs: false,
   name: 'EleTable',
   components: { EleButton, TableColumn },
+  directives: { virtualScroll: virtualScrollDirective },
   data() {
     return {
       i18Keys: [],
@@ -76,6 +79,7 @@ export default {
       limit: 10,
       page: 1,
       tableData: [],
+      bigData: [],
       total: 0,
       current: null,
       selections: [],
@@ -128,6 +132,11 @@ export default {
       default: () => {
         return [10, 30, 50, 100, 300, 500, 1000]
       }
+    },
+    // whether open big table
+    virtualScroll: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {
@@ -138,7 +147,13 @@ export default {
       return { ...this.$listeners }
     },
     showFooter() {
-      return this.tableData.length !== 0 && this.footer !== null
+      return this.tableData.length !== 0 && this.footer !== null && !this.virtualScroll
+    },
+    virtualScrollConfig() {
+      return {
+        data: this.bigData,
+        itemHeight: { mini: 36, small: 40, medium: 44 }[this.$ELEMENT.size]
+      }
     }
   },
   methods: {
@@ -249,7 +264,12 @@ export default {
         .then(response => {
           const data = response.data
           if (data) {
-            this.tableData = data.result
+            if (this.virtualScroll) {
+              this.bigData = data.result
+              this.tableData = []
+            } else {
+              this.tableData = data.result
+            }
             this.total = data.total
             this.current = null
             this.selections = []

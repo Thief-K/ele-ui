@@ -6,11 +6,11 @@
 
 - Button
 - Select
+- Form
+- Table
 
 ## TODO
 
 - [x] I18n
-- [ ] Component API
-- [ ] Form
-- [ ] Table
-- [ ] Logo
+- [x] Table - virtual scroll
+- [ ] Mobile adaptation

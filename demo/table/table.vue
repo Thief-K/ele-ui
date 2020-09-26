@@ -49,6 +49,16 @@
         <CodeFull class="markdown-body" />
       </template>
     </demo-template>
+
+    <demo-template>
+      <template #title>{{ $t('table.virtualScroll') }}</template>
+      <template #content>
+        <EleTable ref="table6" :url="url6" height="400" virtual-scroll :toolbar="toolbar6" :columns="columns6" />
+      </template>
+      <template #code>
+        <CodeVirtual class="markdown-body" />
+      </template>
+    </demo-template>
   </div>
 </template>
 
@@ -59,10 +69,11 @@ import CodeHeader from './code/code-header.md'
 import CodeTree from './code/code-tree.md'
 import CodeLazy from './code/code-lazy.md'
 import CodeFull from './code/code-full.md'
+import CodeVirtual from './code/code-virtual.md'
 import './mock'
 
 export default {
-  components: { EleTable, CodeBasic, CodeHeader, CodeTree, CodeLazy, CodeFull },
+  components: { EleTable, CodeBasic, CodeHeader, CodeTree, CodeLazy, CodeFull, CodeVirtual },
   data() {
     return {
       url1: '/common/table1',
@@ -70,11 +81,13 @@ export default {
       url3: '/common/table3',
       url4: '/common/table4',
       url5: '/common/table5',
+      url6: '/common/table6',
       toolbar1: [{ type: 'query', label: 'query', callback: () => this.query(1) }],
       toolbar2: [{ type: 'query', label: 'query', callback: () => this.query(2) }],
       toolbar3: [{ type: 'query', label: 'query', callback: () => this.query(3) }],
       toolbar4: [{ type: 'query', label: 'query', callback: () => this.query(4) }],
       toolbar5: [{ type: 'query', label: 'query', callback: () => this.query(5) }],
+      toolbar6: [{ type: 'query', label: 'query', callback: () => this.query(6) }],
       columns1: [
         { label: 'no', prop: 'no' },
         { label: 'name', prop: 'name' },
@@ -123,6 +136,12 @@ export default {
             { type: 'delete', label: 'delete', callback: this.delete }
           ]
         }
+      ],
+      columns6: [
+        { label: 'no', prop: 'no' },
+        { label: 'name', prop: 'name' },
+        { label: 'gender', prop: 'gender' },
+        { label: 'age', prop: 'age' }
       ]
     }
   },

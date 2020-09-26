@@ -34,6 +34,7 @@ export default {
   table: {
     multiHeader: '多级表头',
     treeTable: '树形表格',
-    lazyLoad: '懒加载'
+    lazyLoad: '懒加载',
+    virtualScroll: '虚拟滚动'
   }
 }

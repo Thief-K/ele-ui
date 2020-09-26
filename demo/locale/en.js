@@ -34,6 +34,7 @@ export default {
   table: {
     multiHeader: 'Multi-level header',
     treeTable: 'Tree table',
-    lazyLoad: 'Lazy load'
+    lazyLoad: 'Lazy load',
+    virtualScroll: 'Virtual scroll'
   }
 }

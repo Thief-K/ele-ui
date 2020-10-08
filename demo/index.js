@@ -9,6 +9,7 @@ const treeData_zh_CN = [
       { id: 'select', label: 'Select 下拉框' },
       { id: 'form', label: 'Form 表单' },
       { id: 'table', label: 'Table 表格' }
+      // { id: 'test', label: 'Test 测试' }
     ]
   }
 ]
@@ -23,6 +24,7 @@ const treeData_en = [
       { id: 'select', label: 'Select' },
       { id: 'form', label: 'Form' },
       { id: 'table', label: 'Table' }
+      // { id: 'test', label: 'Test' }
     ]
   }
 ]

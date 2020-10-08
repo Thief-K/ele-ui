@@ -13,4 +13,4 @@
 
 - [x] I18n
 - [x] Table - virtual scroll
-- [ ] Mobile adaptation
+- [x] Mobile adaptation

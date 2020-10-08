@@ -1,9 +1,10 @@
 <template>
   <div id="app">
     <el-container class="container-wrap">
-      <el-header height="42px">
+      <el-header class="container-header">
+        <el-button type="text" class="expand-button" :icon="expandIcon" @click="navDrawer = true"></el-button>
         <!-- <img alt="logo" src="./assets/logo.png" style="cursor: pointer; height: 100%;" /> -->
-        <el-popover placement="bottom" width="300">
+        <el-popover placement="bottom" width="300" style="line-height: 50px;">
           <el-form :model="settingForm" label-width="120px">
             <el-form-item :label="$t('homePage.language')">
               <el-select v-model="settingForm.lang">
@@ -19,55 +20,66 @@
         </el-popover>
       </el-header>
       <el-container class="container-main">
-        <el-aside>
-          <el-tree
-            ref="componentTree"
-            :data="treeData"
-            node-key="id"
-            default-expand-all
-            highlight-current
-            :expand-on-click-node="false"
-            @node-click="onNodeClick"
-          >
-          </el-tree>
+        <el-aside class="main-aside">
+          <NavItem :nav-items="navItems" @click="onClickNavItem" />
         </el-aside>
         <el-main>
           <component :is="component"></component>
         </el-main>
       </el-container>
     </el-container>
+
+    <el-drawer :visible.sync="navDrawer" direction="ltr" :show-close="false">
+      <NavItem :nav-items="navItems" @click="onClickNavItem" />
+    </el-drawer>
+    <!-- <el-backtop target=".el-container"></el-backtop> -->
   </div>
 </template>
 
 <script>
 import { getLang, setLang } from './utils/storage'
-import treeData from '../demo/index.js'
+import NavItem from './nav-item'
+import navItems from '../demo/index.js'
 import 'github-markdown-css'
 
 export default {
   name: 'App',
+  components: { NavItem },
   data() {
     return {
       settingForm: {
         lang: getLang()
       },
-      treeData: treeData[getLang()],
+      navItems: navItems[getLang()],
+      navDrawer: false,
       component: null
     }
   },
+  computed: {
+    expandIcon() {
+      return this.navDrawer ? 'el-icon-s-fold' : 'el-icon-s-unfold'
+    }
+  },
   methods: {
-    // triggered when click node
-    onNodeClick(node) {
+    // Triggered when click navigation bar item
+    onClickNavItem(item) {
+      const items = document.querySelectorAll('.nav-item')
+      items.forEach(e => {
+        const firstChild = e.firstChild
+        if (firstChild.innerText === item.label) {
+          firstChild.className = 'active'
+        } else {
+          firstChild.className = ''
+        }
+      })
       let component = null
-      if (node === null) {
+      if (item === null) {
         component = () => import('../demo/home-page/index.vue')
       } else {
-        if (node.disabled) {
-          return
-        }
-        component = () => import(`../demo/${node.id}/${node.id}.vue`)
+        component = () => import(`../demo/${item.id}/${item.id}.vue`)
       }
       this.component = component
+      this.navDrawer = false
     },
 
     // Save setting
@@ -77,56 +89,85 @@ export default {
     }
   },
   created() {
-    this.onNodeClick(null)
+    this.onClickNavItem(null)
   }
 }
 </script>
 
 <style lang="scss">
+* {
+  box-sizing: border-box;
+}
+
 #app {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  width: 70%;
-  min-width: 1200px;
-  margin: 0 auto;
+}
+
+@media screen and (min-width: 960px) {
+  #app {
+    width: 70%;
+    min-width: 960px;
+    margin: 0 auto;
+  }
+  .expand-button {
+    visibility: hidden;
+  }
+}
+
+@media screen and (max-width: 960px) {
+  .main-aside {
+    display: none;
+  }
 }
 
 .container-wrap {
-  height: calc(100vh - 16px);
+  min-height: calc(100vh - 16px);
+}
+
+.container-header {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 3px solid #eee;
+  .expand-button {
+    font-size: 2rem;
+  }
 }
 
 .container-main {
-  height: calc(100vh - 58px);
-
-  ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-  }
-  ::-webkit-scrollbar-track,
-  ::-webkit-scrollbar-thumb {
-    border-radius: 8px;
-    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-    background: rgba(0, 0, 0, 0.1);
+  .main-aside {
   }
 }
 
-.el-header {
-  height: 42px;
-  text-align: right;
-  border-bottom: 3px solid #eee;
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.1);
 }
 
 .el-aside {
   padding: 10px;
   border-right: 3px solid #eee;
-  .el-tree-node__label {
-    font-weight: bold;
-  }
 }
 
 .el-main {
   padding: 20px 50px;
+}
+
+.el-drawer {
+  min-width: 180px;
+  .el-drawer__header {
+    display: none;
+  }
+  .el-drawer__body {
+    padding: 10px;
+  }
 }
 
 .markdown-body pre {

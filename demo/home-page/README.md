@@ -14,3 +14,6 @@
 - [x] I18n
 - [x] Table - virtual scroll
 - [x] Mobile adaptation
+- [x] Logo
+- [ ] Component i18n request
+- [ ] Unit test

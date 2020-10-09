@@ -16,9 +16,14 @@
 </template>
 
 <script>
+import { getLang } from './utils/storage'
+import navItems from '../demo/index.js'
+
 export default {
-  props: {
-    navItems: Array
+  data() {
+    return {
+      navItems: navItems[getLang()]
+    }
   },
   methods: {
     onClick(child) {

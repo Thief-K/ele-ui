@@ -6,7 +6,7 @@
         <EleTable ref="table1" :url="url1" :toolbar="toolbar1" :columns="columns1" />
       </template>
       <template #code>
-        <CodeBasic class="markdown-body" />
+        <CodeBasic />
       </template>
     </demo-template>
 
@@ -16,7 +16,7 @@
         <EleTable ref="table2" :url="url2" :toolbar="toolbar2" :columns="columns2" />
       </template>
       <template #code>
-        <CodeHeader class="markdown-body" />
+        <CodeHeader />
       </template>
     </demo-template>
 
@@ -26,7 +26,7 @@
         <EleTable ref="table3" :url="url3" :toolbar="toolbar3" :columns="columns3" row-key="id" :multiple="true" />
       </template>
       <template #code>
-        <CodeTree class="markdown-body" />
+        <CodeTree />
       </template>
     </demo-template>
 
@@ -36,7 +36,7 @@
         <EleTable ref="table4" :url="url4" :toolbar="toolbar4" :columns="columns4" row-key="id" lazy :load="load" />
       </template>
       <template #code>
-        <CodeLazy class="markdown-body" />
+        <CodeLazy />
       </template>
     </demo-template>
 
@@ -46,7 +46,7 @@
         <EleTable ref="table5" :url="url5" :toolbar="toolbar5" :columns="columns5" index multiple />
       </template>
       <template #code>
-        <CodeFull class="markdown-body" />
+        <CodeFull />
       </template>
     </demo-template>
 
@@ -56,7 +56,7 @@
         <EleTable ref="table6" :url="url6" height="400" virtual-scroll :toolbar="toolbar6" :columns="columns6" />
       </template>
       <template #code>
-        <CodeVirtual class="markdown-body" />
+        <CodeVirtual />
       </template>
     </demo-template>
   </div>

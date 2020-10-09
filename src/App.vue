@@ -3,56 +3,40 @@
     <el-container class="container-wrap">
       <el-header class="container-header">
         <el-button type="text" class="expand-button" :icon="expandIcon" @click="navDrawer = true"></el-button>
-        <!-- <img alt="logo" src="./assets/logo.png" style="cursor: pointer; height: 100%;" /> -->
-        <el-popover placement="bottom" width="300" style="line-height: 50px;">
-          <el-form :model="settingForm" label-width="120px">
-            <el-form-item :label="$t('homePage.language')">
-              <el-select v-model="settingForm.lang">
-                <el-option label="English" value="en"></el-option>
-                <el-option label="中文" value="zh-CN"></el-option>
-              </el-select>
-            </el-form-item>
-          </el-form>
-          <div style="text-align: center;">
-            <el-button type="success" @click="saveSetting"> {{ $t('homePage.save') }} </el-button>
-          </div>
-          <el-button slot="reference" type="primary" icon="el-icon-setting" circle></el-button>
-        </el-popover>
+        <img alt="logo" src="./assets/logo.png" style="cursor: pointer; height: 80%;" @click="onClickLogo" />
+        <AppHeaderSetting />
       </el-header>
-      <el-container class="container-main">
+      <el-container>
         <el-aside class="main-aside">
-          <NavItem :nav-items="navItems" @click="onClickNavItem" />
+          <AppNavItem @click="onClickNavItem" />
         </el-aside>
         <el-main>
-          <component :is="component"></component>
+          <component :is="component" :class="homepageClass"></component>
         </el-main>
       </el-container>
     </el-container>
 
     <el-drawer :visible.sync="navDrawer" direction="ltr" :show-close="false">
-      <NavItem :nav-items="navItems" @click="onClickNavItem" />
+      <AppNavItem @click="onClickNavItem" />
     </el-drawer>
-    <!-- <el-backtop target=".el-container"></el-backtop> -->
+
+    <el-backtop :right="20" :bottom="20"></el-backtop>
   </div>
 </template>
 
 <script>
-import { getLang, setLang } from './utils/storage'
-import NavItem from './nav-item'
-import navItems from '../demo/index.js'
+import AppHeaderSetting from './app-header-setting'
+import AppNavItem from './app-nav-item'
 import 'github-markdown-css'
 
 export default {
   name: 'App',
-  components: { NavItem },
+  components: { AppHeaderSetting, AppNavItem },
   data() {
     return {
-      settingForm: {
-        lang: getLang()
-      },
-      navItems: navItems[getLang()],
       navDrawer: false,
-      component: null
+      component: null,
+      homepageClass: ''
     }
   },
   computed: {
@@ -74,17 +58,18 @@ export default {
       })
       let component = null
       if (item === null) {
+        this.homepageClass = 'markdown-body'
         component = () => import('../demo/home-page/index.vue')
       } else {
+        this.homepageClass = ''
         component = () => import(`../demo/${item.id}/${item.id}.vue`)
       }
       this.component = component
       this.navDrawer = false
     },
 
-    // Save setting
-    saveSetting() {
-      setLang(this.settingForm.lang)
+    // Triggered when click the logo
+    onClickLogo() {
       location.reload()
     }
   },
@@ -135,11 +120,6 @@ export default {
   }
 }
 
-.container-main {
-  .main-aside {
-  }
-}
-
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -152,12 +132,8 @@ export default {
 }
 
 .el-aside {
-  padding: 10px;
+  padding: 20px;
   border-right: 3px solid #eee;
-}
-
-.el-main {
-  padding: 20px 50px;
 }
 
 .el-drawer {
@@ -166,7 +142,7 @@ export default {
     display: none;
   }
   .el-drawer__body {
-    padding: 10px;
+    padding: 20px;
   }
 }
 

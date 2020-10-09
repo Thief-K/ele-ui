@@ -6,7 +6,7 @@
         <EleSelect v-model="value1" :options="options" />
       </template>
       <template #code>
-        <CodeOptions class="markdown-body" />
+        <CodeOptions />
       </template>
     </demo-template>
 
@@ -16,7 +16,7 @@
         <EleSelect v-model="value2" :groups="groups" />
       </template>
       <template #code>
-        <CodeGroups class="markdown-body" />
+        <CodeGroups />
       </template>
     </demo-template>
 
@@ -27,7 +27,7 @@
         <p class="markdown-body">{{ $t('select.dictCodeDesc') }}<code>/common/getDictCode</code></p>
       </template>
       <template #code>
-        <CodeDataDict class="markdown-body" />
+        <CodeDataDict />
       </template>
     </demo-template>
 
@@ -41,7 +41,7 @@
         </p>
       </template>
       <template #code>
-        <CodeRequest class="markdown-body" />
+        <CodeRequest />
       </template>
     </demo-template>
   </div>

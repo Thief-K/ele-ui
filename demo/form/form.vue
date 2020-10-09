@@ -6,7 +6,7 @@
         <EleForm :items="items1" />
       </template>
       <template #code>
-        <CodeBasic class="markdown-body" />
+        <CodeBasic />
       </template>
     </demo-template>
 
@@ -16,7 +16,7 @@
         <EleForm ref="form1" :items="items2" :default-value="defaultValue2" />
       </template>
       <template #code>
-        <CodeLinkage class="markdown-body" />
+        <CodeLinkage />
       </template>
     </demo-template>
 
@@ -31,7 +31,7 @@
         </EleForm>
       </template>
       <template #code>
-        <CodeTitle class="markdown-body" />
+        <CodeTitle />
       </template>
     </demo-template>
 
@@ -54,7 +54,7 @@
         </EleForm>
       </template>
       <template #code>
-        <CodeFull class="markdown-body" />
+        <CodeFull />
       </template>
     </demo-template>
   </div>

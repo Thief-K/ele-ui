@@ -3,7 +3,9 @@
     <template #header>
       <span><slot name="title"></slot></span>
       <el-popover placement="left-start">
-        <slot name="code"></slot>
+        <div class="markdown-body">
+          <slot name="code"></slot>
+        </div>
         <el-button class="demo-code" type="text" slot="reference">{{ $t('common.code') }}</el-button>
       </el-popover>
     </template>

@@ -6,7 +6,7 @@
         <EleButton>{{ $t('button.button') }}</EleButton>
       </template>
       <template #code>
-        <CodeBasic class="markdown-body" />
+        <CodeBasic />
       </template>
     </demo-template>
 
@@ -16,7 +16,7 @@
         <EleButton tooltip circle icon="el-icon-check">{{ $t('button.button') }}</EleButton>
       </template>
       <template #code>
-        <CodeTooltip class="markdown-body" />
+        <CodeTooltip />
       </template>
     </demo-template>
 
@@ -26,7 +26,7 @@
         <EleButton type="delete">{{ $t('button.button') }}</EleButton>
       </template>
       <template #code>
-        <CodePreset class="markdown-body" />
+        <CodePreset />
       </template>
     </demo-template>
   </div>

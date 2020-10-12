@@ -24,4 +24,5 @@
   - `this.$http.get`: http get
   - `this.$http.post`: http post
 - `this.$system`: system variable
-  - `this.$system.lang`: language
+  - `this.$system.lang`: language (`String`)
+  - `this.$system.i18n`: i18n (`Boolean`)

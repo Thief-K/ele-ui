@@ -65,13 +65,13 @@
 <script>
 import EleButton from '../button/button'
 import TableColumn from './table-column'
-import virtualScrollDirective from './virtual-scroll'
+import VirtualScrollDirective from './virtual-scroll'
 
 export default {
   inheritAttrs: false,
   name: 'EleTable',
   components: { EleButton, TableColumn },
-  directives: { virtualScroll: virtualScrollDirective },
+  directives: { virtualScroll: VirtualScrollDirective },
   data() {
     return {
       i18Keys: [],
@@ -291,7 +291,50 @@ export default {
       this.current = null
       this.selections = []
       this.queryParam = {}
+    },
+
+    // Init i18n
+    async initI18n() {
+      if (this.columns.length === 0 || !this.$system.i18n) {
+        return
+      }
+      const keys = []
+      const addI18n = (columns, keys) => {
+        columns.forEach(column => {
+          keys.push(column.label)
+          if (column.operations) {
+            column.operations.forEach(e => {
+              keys.push(e.label)
+            })
+          }
+          if (column.children) {
+            addI18n(column.children, keys)
+          }
+        })
+      }
+      const setI18n = (columns, result) => {
+        columns.forEach(column => {
+          this.$set(column, 'i18n', result[column.label])
+          if (column.operations) {
+            column.operations.forEach(e => {
+              e.i18n = result[e.label]
+            })
+          }
+          if (column.children) {
+            setI18n(column.children, result)
+          }
+        })
+      }
+      addI18n(this.columns, keys)
+      this.toolbar.forEach(e => {
+        keys.push(e.label)
+      })
+      const { data } = await this.$http.get('/common/getI18n', { keys })
+      setI18n(this.columns, data)
     }
+  },
+  created() {
+    this.initI18n()
   }
 }
 </script>

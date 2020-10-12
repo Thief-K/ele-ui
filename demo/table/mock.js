@@ -2,6 +2,27 @@ import Mock from 'better-mock'
 
 const Random = Mock.Random
 
+Mock.mock(/common\/getI18n/, 'get', {
+  data: {
+    no: 'No.',
+    name: 'Name',
+    hobby: 'Hobby',
+    hobby1: 'Hobby1',
+    hobby2: 'Hobby2',
+    hobby3: 'Hobby3',
+    gender: 'Gender',
+    age: 'Age',
+    website: 'Website',
+    subscribe: 'Subscribe',
+    operation: 'Operation',
+    score: 'Score',
+    query: 'Query',
+    edit: 'Edit',
+    delete: 'Delete',
+    talent: 'Talent'
+  }
+})
+
 Mock.mock(/common\/getDictCode/, 'get', {
   data: [
     { value: '01', label: 'Male' },

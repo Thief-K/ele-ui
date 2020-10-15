@@ -15,8 +15,9 @@
 - [x] Table - virtual scroll
 - [x] Mobile adaptation
 - [x] Logo
-- [ ] Component i18n request
+- [x] Component i18n request
 - [ ] Unit test
+- [ ] Promise collector in Form
 
 ## Global function/variable
 

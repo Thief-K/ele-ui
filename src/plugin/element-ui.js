@@ -15,7 +15,8 @@ import {
   Table,
   TableColumn,
   Pagination,
-  Switch
+  Switch,
+  Checkbox
 } from 'element-ui'
 import { Container, Header, Aside, Main, Card, Popover, Drawer, Backtop, Icon, MessageBox } from 'element-ui'
 
@@ -37,6 +38,7 @@ Vue.use(Table)
 Vue.use(TableColumn)
 Vue.use(Pagination)
 Vue.use(Switch)
+Vue.use(Checkbox)
 Vue.use(Loading.directive)
 
 // demo

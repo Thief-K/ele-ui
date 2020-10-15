@@ -19,7 +19,8 @@ Mock.mock(/common\/getI18n/, 'get', {
     query: 'Query',
     edit: 'Edit',
     delete: 'Delete',
-    talent: 'Talent'
+    talent: 'Talent',
+    count: 'Count'
   }
 })
 

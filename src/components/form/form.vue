@@ -13,7 +13,7 @@
         <!-- input -->
         <el-form-item
           v-if="item.elType === 'input' && checkShow(item)"
-          :label="item.label"
+          :label="item.i18n || item.label"
           :prop="item.prop"
           :rules="genRules(item.rules)"
           :key="item.prop + item.elType + index"
@@ -24,7 +24,7 @@
         <!-- number -->
         <el-form-item
           v-if="item.elType === 'number' && checkShow(item)"
-          :label="item.label"
+          :label="item.i18n || item.label"
           :prop="item.prop"
           :rules="genRules(item.rules)"
           :key="item.prop + item.elType + index"
@@ -39,7 +39,7 @@
         <!-- select -->
         <el-form-item
           v-if="item.elType === 'select' && checkShow(item)"
-          :label="item.label"
+          :label="item.i18n || item.label"
           :prop="item.prop"
           :rules="genRules(item.rules)"
           :key="item.prop + item.elType + index"
@@ -50,7 +50,7 @@
         <!-- button -->
         <el-form-item v-if="item.elType === 'button' && checkShow(item)" label=" " :key="item.elType + index">
           <EleButton v-bind="item" @click="() => item.callback()">
-            {{ item.label }}
+            {{ item.i18n || item.label }}
           </EleButton>
         </el-form-item>
 
@@ -112,6 +112,21 @@ export default {
     }
   },
   methods: {
+    // Init i18n
+    async initI18n() {
+      if (this.items.length === 0) {
+        return
+      }
+      const keys = []
+      this.items.forEach(item => {
+        keys.push(item.label)
+      })
+      const { data } = await this.$http.get('/common/getI18n', { keys })
+      this.items.forEach(item => {
+        this.$set(item, 'i18n', data[item.label])
+      })
+    },
+
     // Check whether form item show
     checkShow(item) {
       if (item.show === false) {
@@ -220,6 +235,9 @@ export default {
     }
   },
   created() {
+    if (this.$system.i18n) {
+      this.initI18n()
+    }
     this.setDefaultValue()
   },
   watch: {

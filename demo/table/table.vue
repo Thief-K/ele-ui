@@ -53,7 +53,7 @@
     <demo-template>
       <template #title>{{ $t('table.virtualScroll') }}</template>
       <template #content>
-        <EleTable ref="table6" :url="url6" height="400" virtual-scroll :toolbar="toolbar6" :columns="columns6" />
+        <EleTable ref="table6" :url="url6" height="400" virtual-scroll :toolbar="toolbar6" :columns="columns6" multiple />
       </template>
       <template #code>
         <CodeVirtual />
@@ -87,7 +87,10 @@ export default {
       toolbar3: [{ type: 'query', label: 'query', callback: () => this.query(3) }],
       toolbar4: [{ type: 'query', label: 'query', callback: () => this.query(4) }],
       toolbar5: [{ type: 'query', label: 'query', callback: () => this.query(5) }],
-      toolbar6: [{ type: 'query', label: 'query', callback: () => this.query(6) }],
+      toolbar6: [
+        { type: 'query', label: 'query', callback: () => this.query(6) },
+        { type: 'count', label: 'count', callback: this.count }
+      ],
       columns1: [
         { label: 'no', prop: 'no' },
         { label: 'name', prop: 'name' },
@@ -189,6 +192,11 @@ export default {
     delete({ row }) {
       const json = JSON.stringify(row, null, 2)
       this.$msgbox({ title: 'Form data', message: <pre>{json}</pre> })
+    },
+
+    count(rows) {
+      const count = Array.isArray(rows) ? rows.length : rows ? 1 : 0
+      this.$msgbox({ title: 'Selected rows', message: <pre>{count}</pre> })
     }
   },
   created() {

@@ -98,7 +98,7 @@
             @click="handleEvent(scope.row, column.prop, scope.$index, item.callback)"
             :key="item.label"
           >
-            {{ item.label }}
+            {{ item.i18n || item.label }}
           </EleButton>
         </template>
       </template>

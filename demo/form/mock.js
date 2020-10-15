@@ -2,6 +2,18 @@ import Mock from 'better-mock'
 
 const Random = Mock.Random
 
+Mock.mock(/common\/getI18n/, 'get', {
+  data: {
+    input: 'Input',
+    number: 'Number',
+    select: 'Select',
+    country: 'Country',
+    city: 'City',
+    address: 'Address',
+    submit: 'Submit'
+  }
+})
+
 Mock.mock(/common\/getDictCode/, 'get', {
   data: () => {
     let arr = []

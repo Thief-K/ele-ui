@@ -12,7 +12,7 @@
     <div v-if="toolbar.length > 0" style="margin-bottom: 8px;">
       <template v-for="(item, index) in toolbar">
         <EleButton v-bind="item" :key="index" @click="toolbarClick(item.callback)">
-          {{ item.label }}
+          {{ item.i18n || item.label }}
         </EleButton>
       </template>
     </div>
@@ -35,7 +35,27 @@
       <el-table-column v-if="multiple === false" type="index" label="#" width="42" align="center"></el-table-column>
 
       <!-- selection -->
-      <el-table-column v-if="multiple === true" type="selection" width="42" align="center"></el-table-column>
+      <el-table-column v-if="multiple && !virtualScroll" type="selection" width="42" align="center"></el-table-column>
+
+      <!-- selection -->
+      <el-table-column v-if="multiple && virtualScroll" width="42" align="center">
+        <template #header>
+          <el-checkbox
+            :disabled="tableData.length === 0"
+            :indeterminate="halfChecked"
+            :value="allChecked"
+            @change="toggleAllSelection"
+          />
+        </template>
+        <template #default="slotScope">
+          <el-checkbox
+            :value="slotScope.row.checked"
+            :key="Math.random()"
+            @input="rowSelectedChanged(slotScope.row)"
+            @click.native.stop
+          />
+        </template>
+      </el-table-column>
 
       <!-- column -->
       <template v-for="column in columns">
@@ -79,12 +99,14 @@ export default {
       limit: 10,
       page: 1,
       tableData: [],
-      bigData: [],
       total: 0,
       current: null,
       selections: [],
       queryParam: null,
-      loading: false
+      loading: false,
+      bigData: [],
+      allChecked: false,
+      halfChecked: false
     }
   },
   props: {
@@ -157,6 +179,49 @@ export default {
     }
   },
   methods: {
+    // Init i18n
+    async initI18n() {
+      if (this.columns.length === 0) {
+        return
+      }
+      const keys = []
+      const addI18n = (columns, keys) => {
+        columns.forEach(column => {
+          keys.push(column.label)
+          if (column.operations) {
+            column.operations.forEach(e => {
+              keys.push(e.label)
+            })
+          }
+          if (column.children) {
+            addI18n(column.children, keys)
+          }
+        })
+      }
+      const setI18n = (columns, data) => {
+        columns.forEach(column => {
+          this.$set(column, 'i18n', data[column.label])
+          if (column.operations) {
+            column.operations.forEach(e => {
+              e.i18n = data[e.label]
+            })
+          }
+          if (column.children) {
+            setI18n(column.children, data)
+          }
+        })
+      }
+      addI18n(this.columns, keys)
+      this.toolbar.forEach(e => {
+        keys.push(e.label)
+      })
+      const { data } = await this.$http.get('/common/getI18n', { keys })
+      setI18n(this.columns, data)
+      this.toolbar.forEach(e => {
+        e.i18n = data[e.label]
+      })
+    },
+
     // Triggered when click toolbar button
     toolbarClick(callback) {
       callback && callback(this.getSelections())
@@ -164,6 +229,10 @@ export default {
 
     // Triggered when current row change
     onCurrentChange(row) {
+      if (!row) {
+        // when virtual scrolling, the row will be null
+        return
+      }
       this.current = row
       this.$emit('current-change', row)
     },
@@ -224,7 +293,7 @@ export default {
 
     // Get selections
     getSelections() {
-      return this.multiple ? this.selections : this.current
+      return !this.multiple ? this.current : this.virtualScroll ? this.bigData.filter(v => v.checked) : this.selections
     },
 
     // Toggle selected rows
@@ -267,6 +336,8 @@ export default {
             if (this.virtualScroll) {
               this.bigData = data.result
               this.tableData = []
+              this.allChecked = false
+              this.halfChecked = false
             } else {
               this.tableData = data.result
             }
@@ -293,48 +364,38 @@ export default {
       this.queryParam = {}
     },
 
-    // Init i18n
-    async initI18n() {
-      if (this.columns.length === 0 || !this.$system.i18n) {
-        return
+    // Triggered when row checked (virtual scroll only)
+    rowSelectedChanged(row) {
+      this.$set(row, 'checked', !row.checked)
+      const count = this.bigData.filter(v => v.checked).length
+      this.allChecked = false
+      this.halfChecked = false
+      if (row.checked) {
+        if (count === this.bigData.length) {
+          this.allChecked = true
+        } else {
+          this.halfChecked = true
+        }
+      } else {
+        if (count !== 0) {
+          this.halfChecked = true
+        }
       }
-      const keys = []
-      const addI18n = (columns, keys) => {
-        columns.forEach(column => {
-          keys.push(column.label)
-          if (column.operations) {
-            column.operations.forEach(e => {
-              keys.push(e.label)
-            })
-          }
-          if (column.children) {
-            addI18n(column.children, keys)
-          }
-        })
-      }
-      const setI18n = (columns, result) => {
-        columns.forEach(column => {
-          this.$set(column, 'i18n', result[column.label])
-          if (column.operations) {
-            column.operations.forEach(e => {
-              e.i18n = result[e.label]
-            })
-          }
-          if (column.children) {
-            setI18n(column.children, result)
-          }
-        })
-      }
-      addI18n(this.columns, keys)
-      this.toolbar.forEach(e => {
-        keys.push(e.label)
+    },
+
+    // Triggered when toggle all selection (virtual scroll only)
+    toggleAllSelection(value) {
+      this.allChecked = value
+      this.halfChecked = false
+      this.bigData.forEach(v => {
+        this.$set(v, 'checked', value)
       })
-      const { data } = await this.$http.get('/common/getI18n', { keys })
-      setI18n(this.columns, data)
     }
   },
   created() {
-    this.initI18n()
+    if (this.$system.i18n) {
+      this.initI18n()
+    }
   }
 }
 </script>

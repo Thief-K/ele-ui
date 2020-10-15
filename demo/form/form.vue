@@ -73,14 +73,14 @@ export default {
   data() {
     return {
       items1: [
-        { prop: 'input', label: 'Input', elType: 'input' },
-        { prop: 'number', label: 'Number', elType: 'number' },
-        { prop: 'select', label: 'Select', elType: 'select', dictCode: 'name' }
+        { prop: 'input', label: 'input', elType: 'input' },
+        { prop: 'number', label: 'number', elType: 'number' },
+        { prop: 'select', label: 'select', elType: 'select', dictCode: 'name' }
       ],
       items2: [
         {
           prop: 'country',
-          label: 'Country',
+          label: 'country',
           elType: 'select',
           clearable: true,
           options: [
@@ -91,22 +91,22 @@ export default {
         },
         {
           prop: 'city',
-          label: 'City',
+          label: 'city',
           elType: 'select',
           clearable: true,
           show: false,
           options: [],
           callback: this.handleCityChange
         },
-        { prop: 'address', label: 'Address', elType: 'input', show: false },
-        { label: 'Submit', elType: 'button', type: 'primary', callback: () => this.submitForm('form1') }
+        { prop: 'address', label: 'address', elType: 'input', show: false },
+        { label: 'submit', elType: 'button', type: 'primary', callback: () => this.submitForm('form1') }
       ],
       defaultValue2: {},
       items3: [
-        { prop: 'input', label: 'Input', elType: 'input', rules: { required: true } },
-        { prop: 'number', label: 'Number', elType: 'number', rules: { required: true, range: [0, 100] } },
-        { prop: 'select', label: 'Select', elType: 'select', dictCode: 'name', rules: { required: true } },
-        { label: 'Submit', elType: 'button', type: 'primary', callback: () => this.submitForm('form2') }
+        { prop: 'input', label: 'input', elType: 'input', rules: { required: true } },
+        { prop: 'number', label: 'number', elType: 'number', rules: { required: true, range: [0, 100] } },
+        { prop: 'select', label: 'select', elType: 'select', dictCode: 'name', rules: { required: true } },
+        { label: 'submit', elType: 'button', type: 'primary', callback: () => this.submitForm('form2') }
       ],
       defaultValue3: {}
     }

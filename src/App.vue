@@ -25,8 +25,8 @@
 </template>
 
 <script>
-import AppHeaderSetting from './app-header-setting'
-import AppNavItem from './app-nav-item'
+import AppHeaderSetting from './components/app-header-setting'
+import AppNavItem from './components/app-nav-item'
 import 'github-markdown-css'
 
 export default {

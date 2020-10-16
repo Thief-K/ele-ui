@@ -16,8 +16,8 @@
 </template>
 
 <script>
-import { getLang } from './utils/storage'
-import navItems from '../demo/index.js'
+import { getLang } from '../utils/storage'
+import navItems from '../../demo/index.js'
 
 export default {
   data() {

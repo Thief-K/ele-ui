@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import EleSelect from '../../src/components/select/select.vue'
+import EleSelect from '../../packages/select/select.vue'
 import CodeOptions from './code/code-options.md'
 import CodeGroups from './code/code-groups.md'
 import CodeDataDict from './code/code-data-dict.md'

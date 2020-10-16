@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import EleButton from '../../src/components/button/button.vue'
+import EleButton from '../../packages/button/button.vue'
 import CodeBasic from './code/code-basic.md'
 import CodeTooltip from './code/code-tooltip.md'
 import CodePreset from './code/code-preset.md'

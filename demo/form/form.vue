@@ -61,7 +61,7 @@
 </template>
 
 <script>
-import EleForm from '../../src/components/form/form.vue'
+import EleForm from '../../packages/form/form.vue'
 import CodeBasic from './code/code-basic.md'
 import CodeLinkage from './code/code-linkage.md'
 import CodeTitle from './code/code-title.md'

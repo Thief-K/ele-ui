@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { getLang, setLang } from './utils/storage'
+import { getLang, setLang } from '../utils/storage'
 
 export default {
   data() {

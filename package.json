@@ -1,14 +1,13 @@
 {
   "name": "ele-ui",
-  "version": "0.1.0",
-  "private": true,
+  "version": "1.0.0",
   "scripts": {
     "serve": "vue-cli-service serve --open",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
     "test:coverage": "vue-cli-service test:unit --coverage",
     "lint": "vue-cli-service lint",
-    "lib": "vue-cli-service build --target lib --name ele-ui --dest lib ./src/components/index.js"
+    "lib": "vue-cli-service build --target lib --name ele-ui --dest lib ./packages/index.js"
   },
   "main": "lib/ele-ui.common.js",
   "dependencies": {

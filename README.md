@@ -18,6 +18,8 @@
 - [x] Component i18n request
 - [ ] Unit test
 - [ ] Promise collector in Form
+- [ ] Publish
+- [ ] API document
 
 ## Global function/variable
 

@@ -63,7 +63,7 @@
 </template>
 
 <script>
-import EleTable from '../../src/components/table/table.vue'
+import EleTable from '../../packages/table/table.vue'
 import CodeBasic from './code/code-basic.md'
 import CodeHeader from './code/code-header.md'
 import CodeTree from './code/code-tree.md'

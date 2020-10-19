@@ -1,6 +1,7 @@
 {
-  "name": "ele-ui",
-  "version": "1.0.0",
+  "name": "ele-ui-vue",
+  "version": "1.0.2",
+  "author": "konper",
   "scripts": {
     "serve": "vue-cli-service serve --open",
     "build": "vue-cli-service build",

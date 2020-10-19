@@ -74,6 +74,7 @@ import cloneDeep from 'lodash/cloneDeep'
 
 // Form
 export default {
+  name: 'EleForm',
   components: { EleSelect, EleButton },
   data() {
     return {

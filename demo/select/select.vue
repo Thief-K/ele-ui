@@ -23,7 +23,7 @@
     <demo-template>
       <template #title>{{ $t('select.dictCode') }}</template>
       <template #content>
-        <EleSelect v-model="value3" dictCode="name" />
+        <EleSelect v-model="value3" dict-code="name" />
         <p class="markdown-body">{{ $t('select.dictCodeDesc') }}<code>/common/getDictCode</code></p>
       </template>
       <template #code>

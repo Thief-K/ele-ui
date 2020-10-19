@@ -1,5 +1,5 @@
 ```vue
 <template>
-  <EleButton tooltip circle icon="el-icon-check"></EleButton>
+  <EleButton tooltip circle icon="el-icon-check">Button</EleButton>
 </template>
 ```

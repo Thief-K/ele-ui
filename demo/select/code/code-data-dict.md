@@ -1,6 +1,6 @@
 ```vue
 <template>
-  <EleSelect v-model="value" dictCode="name" />
+  <EleSelect v-model="value" dict-code="name" />
 </template>
 
 <script>

@@ -60,5 +60,5 @@ Vue.prototype.$system = { lang: 'en', i18n: true } // auto i18n request
 - [x] Component i18n request
 - [ ] Unit test
 - [ ] Promise collector in Form
-- [ ] Publish
+- [x] Publish
 - [ ] API document

@@ -1,43 +1,21 @@
 {
-  "name": "ele-ui-vue",
-  "version": "1.0.2",
-  "author": "konper",
+  "name": "ele-ui",
+  "version": "2.0.0",
+  "author": "Konp",
   "scripts": {
-    "serve": "vue-cli-service serve --open",
-    "build": "vue-cli-service build",
-    "test:unit": "vue-cli-service test:unit",
-    "test:coverage": "vue-cli-service test:unit --coverage",
-    "lint": "vue-cli-service lint",
-    "lib": "vue-cli-service build --target lib --name ele-ui --dest lib ./packages/index.js"
+    "dev": "vite",
+    "build": "vite build",
+    "build:check": "vuedx-typecheck . && vite build"
   },
-  "main": "lib/ele-ui.common.js",
   "dependencies": {
-    "better-mock": "^0.2.6",
-    "core-js": "^3.6.5",
-    "element-ui": "^2.13.2",
-    "github-markdown-css": "^4.0.0",
-    "lodash": "^4.17.20",
-    "vue": "^2.6.12",
-    "vue-i18n": "^8.21.0"
+    "vue": "^3.0.5"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "~4.5.4",
-    "@vue/cli-plugin-eslint": "~4.5.4",
-    "@vue/cli-plugin-unit-jest": "~4.5.4",
-    "@vue/cli-service": "~4.5.4",
-    "@vue/eslint-config-prettier": "^6.0.0",
-    "@vue/test-utils": "^1.0.5",
-    "babel-eslint": "^10.1.0",
-    "babel-plugin-component": "^1.1.1",
-    "eslint": "^6.7.2",
-    "eslint-plugin-prettier": "^3.1.4",
-    "eslint-plugin-vue": "^6.2.2",
-    "identity-obj-proxy": "^3.0.0",
-    "prettier": "^1.19.1",
-    "sass": "^1.26.5",
-    "sass-loader": "^8.0.2",
-    "vue-markdown-loader": "^2.4.1",
-    "vue-template-compiler": "^2.6.12",
-    "webpack-bundle-analyzer": "^3.8.0"
+    "@vitejs/plugin-vue": "^1.0.5",
+    "@vue/compiler-sfc": "^3.0.5",
+    "@vuedx/typecheck": "^0.5.0",
+    "@vuedx/typescript-plugin-vue": "^0.5.0",
+    "typescript": "^4.1.3",
+    "vite": "^2.0.0-beta.27"
   }
 }

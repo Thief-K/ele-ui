@@ -6,7 +6,7 @@ import markdownIt from './build/markdown'
 export default defineConfig({
   plugins: [vue(), markdown({ mode: [Mode.VUE], markdownIt })],
   optimizeDeps: {
-    include: ['element-plus/lib/el-button', 'element-plus/lib/el-tooltip']
-    // exclude: ['element-plus']
+    include: ['element-plus/lib/locale/lang/en', 'element-plus/lib/locale/lang/zh-cn']
+    // exclude: ['element-plus', 'lodash']
   }
 })
